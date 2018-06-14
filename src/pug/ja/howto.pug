@@ -1,0 +1,177 @@
+include ../pug-mixins
+
+doctype
+html(lang="ja")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
+    title Bootstrap 4 customization: カスタマイズの方法
+    link(rel="stylesheet" href="../css/howto.css")
+  body
+    div.container
+      +headerJa("howto")
+        p.lead カスタマイズの方法
+
+      h2#overview カスタマイズの手順
+      p.my-2 Bootstrap 4 CSSのソースコードは
+        +link("https://sass-lang.com/") Sass
+        | で書かれている。一般なカスタマイズ手順は次の通り。Bootstrapのライブラリーコードに手を加える必要はなく、拡張用のSassファイルを作りそこへ記述する。
+      ol
+        li 拡張用Sassファイルを作成
+          ol
+            li カスタマイズ用変数を定義して値を設定
+            li Bootstrap Sassコードをインポート
+            li (オプション) 必要に応じて追加スタイルを記述
+        li SassファイルをCSSへコンパイル
+        li Autoprefixerでベンダープリフィクスを追加
+        li (オプション) CSS圧縮ツールで最適化
+
+      h2.mt-4#tools 必要なツール
+      p.my-2 Bootstrap Sassのカスタマイズには2種類(オプションで3種類)のツールが必要。また作業の効率化のため一般的にビルドツールも用いる。
+      h4.mt-3#sass Sass
+      p.my-2 Sassの公式実装は
+        +link("https://sass-lang.com/ruby-sass") Ruby Sass
+        |  (オリジナル)、
+        +link("https://sass-lang.com/libsass") libsass
+        |  (C++)と
+        +link("https://sass-lang.com/dart-sass") Dart Sass
+        |  (最近リリースされたばかり)の3種類がある。Ruby Sassとlibsassがポピュラーだが、後発のlibsassの方が高速なので最近はlibsassがよく用いられる。このチュートリアルではlibsassの
+        +link("https://nodejs.org/") node.js
+        | 用インターフェースである
+        +link("https://github.com/sass/node-sass") node-sass
+        | を用いている。
+      h4.mt-3#mt-4autoprefixer Autoprefixer
+      p.my-2 Bootstrap 4 CSSのSassソースコードは(一部を除き)ベンダープリフィクスを意図的に書かないコーディングスタイルで書かれており、ベンダープリフィクス処理を
+        +link("https://github.com/postcss/autoprefixer") Autoprefixer
+        | に任せることで対応している。Autoprefixerは
+        +link("https://github.com/postcss/postcss") PostCSS
+        | のプラグインで、
+        +link("https://nodejs.org/") node.js
+        | 上で動作する(互換ツールなし)。
+      p.my-2 Autoprefixerdではサポートするブラウザの条件を
+        code package.json
+        | に
+        +link("https://github.com/browserslist/browserslist") browserslist
+        | の形式で記述する(書式は
+        +link("https://github.com/browserslist/browserslist#best-practices") Best Practices
+        | と
+        +link("https://github.com/browserslist/browserslist#full-list") Full List
+        | を参照)。本チュートリアルは
+        +link("https://github.com/twbs/bootstrap/tree/v4.1.1") Bootstrap 4.1.1
+        | のソースコードを用いており、その
+        +link("https://github.com/twbs/bootstrap/blob/v4.1.1/package.json")
+          code.text-danger package.json
+        | から設定を引用している(下記参照)。この情報をAutoprefixerが参照し、各CSSプロパティに対してベンダープリフィクスの追加や除去を行う。
+      div
+        code package.json
+        |  (一部)
+      pre.p-2.border.bg-light
+        code
+          = `"browserslist": [\n`
+          = `  "last 1 major version",\n`
+          = `  ">= 1%",\n`
+          = `  "Chrome >= 45",\n`
+          = `  "Firefox >= 38",\n`
+          = `  "Edge >= 12",\n`
+          = `  "Explorer >= 10",\n`
+          = `  "iOS >= 9",\n`
+          = `  "Safari >= 9",\n`
+          = `  "Android >= 4.4",\n`
+          = `  "Opera >= 30"\n`
+          = `]`
+      h4.mt-3#mt-4minifier (オプション) CSS圧縮ツール
+      p.my-2 CSS圧縮ツールでサイズ圧縮を行うのは一般的なサイト最適化方法のひとつでツールも数多い。本チュートリアルは開発環境に
+        +link("https://www.nodejs.com/") node.js
+        | を用いているが、node用CSS圧縮ツールも多数ある。
+      ul
+        li
+          +link("https://github.com/jakubpawlowicz/clean-css") clean-css
+          |  - スタンドアロンツール、Bootstrapがライブラリビルドに使用している
+        li PostCSSプラグイン
+          ul
+            li
+              +link("https://github.com/hail2u/node-csswring") csswring
+              |  - 本チュートリアルで使用(扱いが簡単)
+            li
+              +link("https://github.com/ben-eb/cssnano") cssnano
+              |  - 有名で高機能、ただしやや難しい(正しく使わないと副作用あり)
+      h4.mt-3#build-tool ビルドツール
+      p.my-2 作業の効率化には何らかのビルドツールが必要だが好みのツールでよい(GNU makeやApache Ant等も可)。本チュートリアルは開発環境にnode.jsを用いているが(理由はAutoprefixerがnode.js専用で代替ツールがないため)、node.js用ビルドツール(タスクランナー)には有名なものが多数ある(WebPack, Gulp, Grunt等)。
+      p.my-2 本チュートリアルではビルドツールに
+        +link("https://npmjs.com/") npm
+        | を用いている。npmは本来node.js用パッケージマネージャだが簡単なビルドツールにもなる。操作は
+        code npm run[-script]
+        | コマンド(
+        +link("https://docs.npmjs.com/cli/run-script") リファレンス
+        | 参照)で行い、全コマンドは
+        +link("https://github.com/higuma/bootstrap-4-css-customization/blob/master/package.json") package.json
+        | 中の
+        code "scripts:"
+        | フィールドに記述してある。
+
+      h2.mt-4#bootstrap-sass Bootstrap Sassソースコード
+      p.my-2 Bootstrap Sassソースコードは
+        code .scss
+        | ファイル群で構成されており、ファイルはその用途により2種類に分けられる。
+      ul
+        li プリコンパイル版コード生成用 - 
+          code bootstrap.scss
+          | , 
+          code bootstrap.grid.scss
+          | , 
+          code bootstrap.reboot.scss
+          |  の3つ
+        li
+          +link("https://sass-lang.com/documentation/file.SASS_REFERENCE.html#partials") パーシャル
+          |  - モジュールファイル(ファイル名がアンダースコアで始まるもの、例: 
+          code _variables.scss
+          | )
+      p.my-2 これらのソースファイルを利用するには
+        +link("https://sass-lang.com/documentation/file.SASS_REFERENCE.html#import")
+          code @import
+        | 文を用いる。Bootstrapの全機能をインポートする場合は
+        code @import "{path}/bootstrap";
+        | とする。パーシャルの場合も同様で、
+        code @import "{path}/variables";
+        |  (例: 
+        code _variables.scss
+        | をインポートする場合)のように記述する。先頭のアンダースコアは省略してよい(通常書かない)。
+
+      h2.mt-4#customizing Bootstrapのカスタマイズ
+      p.my-2 Bootstrapには500以上のカスタマイズ可能な
+        +link("https://sass-lang.com/documentation/file.SASS_REFERENCE.html#variables_") Sass変数
+        |  (先頭文字は
+        code $
+        | )があり、これらの変数は全て
+        code _variable.scss
+        | の中で
+        +link("https://sass-lang.com/documentation/file.SASS_REFERENCE.html#variable_defaults_default") デフォルト値付き書式
+        |  
+        code !default
+        |  を用いて定義されている。
+      div
+        code _variable.scss
+        |  (一部)
+      pre.p-2.border.bg-light
+        code
+          = `$white:    #fff !default;\n`
+          = `$gray-100: #f8f9fa !default;\n`
+          = `$gray-200: #e9ecef !default;\n`
+          = `...\n`
+          = `$body-bg:                   $white !default;\n`
+          = `$body-color:                $gray-900 !default;\n`
+          = `...`
+      p.my-2 Bootstrapのカスタマイズは基本的にこれらの変数を変更することによって行う。まず最初に自分で値を指定して目的の変数を定義し、その後でBootstrapをインポートすればよい。例えばページの基本色設定を変更するには次のようにすればよい。
+      pre.p-2.border.bg-light
+        code
+          = `// 先に変数を定義しておく(!defaultの値より優先する)\n`
+          = `$body-bg: ivory;        // または #fffff0;\n`
+          = `$body-color: navy;      // または #000080;\n`
+          = `\n`
+          = `// Bootstrapを全体丸ごとインポート\n`
+          = `@import "bootstrap/scss/bootstrap";`
+      p.my-2 より細かくパーシャル単位でソールをインポートする方法もある。詳しくは
+        a(href="partials.html") Sassパーシャルのインポート
+        | を参照。
+
+      +breadcrumb1("ホーム", "カスタマイズの方法")

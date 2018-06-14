@@ -1,0 +1,15 @@
+// import required partials
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
+
+// import minimum partials used for this page
+@import "bootstrap/scss/root";
+@import "bootstrap/scss/reboot";
+@import "bootstrap/scss/type";
+@import "bootstrap/scss/code";
+@import "bootstrap/scss/grid";
+@import "bootstrap/scss/breadcrumb";
+@import "bootstrap/scss/utilities/background";
+@import "bootstrap/scss/utilities/borders";
+@import "bootstrap/scss/utilities/spacing";

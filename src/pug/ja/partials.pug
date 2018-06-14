@@ -1,0 +1,62 @@
+include ../pug-mixins
+
+doctype
+html(lang="ja")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
+    title Bootstrap 4 customization: Sassパーシャルのインポート
+    link(rel="stylesheet" href="../css/partials.css")
+  body
+    div.container
+      +headerJa("partials")
+        p.lead Sassパーシャルのインポート
+      h2#partials
+        +link("https://sass-lang.com/documentation/file.SASS_REFERENCE.html#partials") パーシャル
+      p.my-2 Bootstrap Sassソースコードは多数の
+        code .scss
+        | ファイルで構成されている(一覧は
+        +link("https://github.com/twbs/bootstrap/tree/v4.1.1/scss") GitHubリポジトリ
+        | を参照)。これらは用途により2種類に分類される。
+      ul
+        li ライブラリターゲット(配布用プリコンパイル版)生成用
+          ul
+            li: code bootstrap.scss
+            li: code bootstrap.grid.scss
+            li: code bootstrap.reboot.scss
+        li
+          +link("https://sass-lang.com/documentation/file.SASS_REFERENCE.html#partials") パーシャル
+          |  - その他全て
+          ul
+            li ファイル名がアンダースコアで始まる(例: 
+              code _functions.scss
+              | )
+            li モジュールファイルで、上記ターゲットや他のモジュールから参照される
+      p.my-2 パーシャルのインポートには
+        +link("https://sass-lang.com/documentation/file.SASS_REFERENCE.html#import")
+          code @import
+        | 文を用いる。パーシャルは伝統的にファイル名先頭にアンダースコアを用いるが、
+        code @import
+        | 文ではこれを省略できる(書いてもよいが通常書かない)。
+      p.my-2 本ページはBootstrapの全機能のうちほんの一部しか利用していないので、使用パーシャルを調べてそれらだけインポートすればサイズを削減できる(ただし多少のコード解読と解析が必要)。以下の例(本ページのCSS用)を用いて全機能(138k)に比べて34kにまで削減できる(バージョン4.1.1の場合)。
+      div
+        code partials.scss
+      pre.p-2.mb-4.border.bg-light
+        code
+          = `// 必須パーシャルをインポート\n`
+          = `@import "bootstrap/scss/functions";\n`
+          = `@import "bootstrap/scss/variables";\n`
+          = `@import "bootstrap/scss/mixins";\n`
+          = `\n`
+          = `// 本ページに用いられている最小限のパーシャルだけ選んでインポート\n`
+          = `@import "bootstrap/scss/root";\n`
+          = `@import "bootstrap/scss/reboot";\n`
+          = `@import "bootstrap/scss/type";\n`
+          = `@import "bootstrap/scss/code";\n`
+          = `@import "bootstrap/scss/grid";\n`
+          = `@import "bootstrap/scss/breadcrumb";\n`
+          = `@import "bootstrap/scss/utilities/background";\n`
+          = `@import "bootstrap/scss/utilities/borders";\n`
+          = `@import "bootstrap/scss/utilities/spacing";\n`
+
+      +breadcrumb1("ホーム", "Sassパーシャルのインポート")

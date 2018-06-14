@@ -1,0 +1,171 @@
+include ../pug-mixins
+
+doctype
+html(lang="en")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
+    title Bootstrap 4 customization: How to customize
+    link(rel="stylesheet" href="../css/howto.css")
+  body
+    div.container
+      +headerEn("howto")
+        p.lead How to customize
+
+      h2#overview Overview
+      p.my-2 Bootstrap 4 CSS source code is written in 
+        +link("https://sass-lang.com/") Sass
+        | . You can customize Bootstrap CSS in various ways. A typical workflow is as follows.
+      ol
+        li Make your own Sass file for extension
+          ol
+            li Initialize customization variables
+            li Import Bootstrap Sass code
+            li (Optional) append your own style
+        li Compile Sass source code to CSS
+        li Process vendor prefixes with Autoprefixer
+        li (Optional) Minify CSS
+
+      h2.mt-4#tools Tools
+      p.my-2 Bootstrap Sass customization requires at least two (or three) processing tools. You may also need a build tool.
+      h4.mt-3#sass Sass
+      p.my-2 Sass has three official implementations: 
+        +link("https://sass-lang.com/ruby-sass") Ruby Sass
+        |  (original), 
+        +link("https://sass-lang.com/libsass") libsass
+        |  (C++), and 
+        +link("https://sass-lang.com/dart-sass") Dart Sass
+        |  (just released recently). Ruby Sass and libsass are both popular but libsass has been getting major as it is much faster than Ruby Sass. This tutorial uses 
+        +link("https://github.com/sass/node-sass") node-sass
+        | , which is an interface of libsass for 
+        +link("https://nodejs.org/") node.js
+        | .
+      h4.mt-3#mt-4autoprefixer Autoprefixer
+      p.my-2 Most parts of Bootstrap 4 are written in pure (i.e. no vender prefix) Sass. It relies on 
+        +link("https://github.com/postcss/autoprefixer") Autoprefixer
+        |  to process vendor prefixes. It runs as a 
+        +link("https://github.com/postcss/postcss") PostCSS
+        |  plugin on 
+        +link("https://nodejs.org/") node.js
+        |  (no alternative).
+      p.my-2 Supported browsers are written in 
+        code package.json
+        |  with 
+        +link("https://github.com/browserslist/browserslist") browserslist
+        |  format (see 
+        +link("https://github.com/browserslist/browserslist#best-practices") Best Practices
+        |  and 
+        +link("https://github.com/browserslist/browserslist#full-list") Full List
+        |  for query syntax). This tutorial uses exactly the same settings as Bootstrap 4.1.1 as follows. It is referenced by Autoprefixer to add or remove vender prefixes for each CSS property.
+      div
+        code package.json
+        |  (excerpts)
+      pre.p-2.border.bg-light
+        code
+          = `"browserslist": [\n`
+          = `  "last 1 major version",\n`
+          = `  ">= 1%",\n`
+          = `  "Chrome >= 45",\n`
+          = `  "Firefox >= 38",\n`
+          = `  "Edge >= 12",\n`
+          = `  "Explorer >= 10",\n`
+          = `  "iOS >= 9",\n`
+          = `  "Safari >= 9",\n`
+          = `  "Android >= 4.4",\n`
+          = `  "Opera >= 30"\n`
+          = `]`
+      h4.mt-3#mt-4minifier (Optional) CSS minifier
+      p.my-2 You can optimize CSS output with a CSS minifier. There are a lot of CSS minifiers for various environments (you can use anything you like). This tutorial uses 
+        +link("https://www.nodejs.com/") node.js
+        |  for the working environment. There are several choises for CSS minifiers for node.js.
+      ul
+        li
+          +link("https://github.com/jakubpawlowicz/clean-css") clean-css
+          |  - stand-alone, used for building Bootstrap library
+        li PostCSS plugins
+          ul
+            li
+              +link("https://github.com/hail2u/node-csswring") csswring
+              |  - used in ths tutorial (easy)
+            li
+              +link("https://github.com/ben-eb/cssnano") cssnano
+              |  - high spec and popular, but slightly difficult and complex
+      h4.mt-3#build-tool Build tool
+      p.my-2 You may also need a build tool. You can use anything you prefer (like GNU make). This tutorial recommends node.js-based tools as Autoprefixer (runs only on node.js) is required. There are numbers of build (task runner) tools on node.js (like Webpack, Gulp, Grunt, etc.).
+      p.my-2 This tutorial uses 
+        +link("https://npmjs.com/") npm
+        |  CLI for simplicity. Npm is mostly a package manager for node.js but also a tiny task runner. All build operations are made with 
+        code npm run[-script]
+        |  commands (see 
+        +link("https://docs.npmjs.com/cli/run-script") reference
+        | ). Commands are written in 
+        code "scripts:"
+        |  field of 
+        +link("https://github.com/higuma/bootstrap-4-css-customization/blob/master/package.json") package.json
+        | .
+
+      h2.mt-4#bootstrap-sass Bootstrap Sass code
+      p.my-2 Bootstrap Sass source code consists of multiple 
+        code .scss
+        |  source files. They are classified into two types.
+      ul
+        li Library targets - 
+          code bootstrap.scss
+          | , 
+          code bootstrap.grid.scss
+          | , and 
+          code bootstrap.reboot.scss
+        li
+          +link("https://sass-lang.com/documentation/file.SASS_REFERENCE.html#partials") Partials
+          |  - module files (each file begins with underscore: e.g. 
+          code _variables.scss
+          | )
+      p.my-2 Use 
+        +link("https://sass-lang.com/documentation/file.SASS_REFERENCE.html#import")
+          code @import
+        |  statement to use (import) Sass code. You can import whole Bootstrap code with 
+        code @import "{path}/bootstrap";
+        | . Or you can also import by partials as 
+        code @import "{path}/variables";
+        |  (for 
+        code _variables.scss
+        | ). You do not have to type underscores.
+
+      h2.mt-4#customizing Customizing Bootstrap
+      p.my-2 Bootstrap uses a lot of (over 500!) 
+        +link("https://sass-lang.com/documentation/file.SASS_REFERENCE.html#variables_") Sass variables
+        |  (with prefix 
+        code $
+        |  as Sass syntax) for the library implementation and also for customization. All variables are defined in 
+        code _variable.scss
+        |  with 
+        +link("https://sass-lang.com/documentation/file.SASS_REFERENCE.html#variable_defaults_default") variable default syntax
+        |  
+        code !default
+        | .
+      div
+        code _variable.scss
+        |  (excerpts)
+      pre.p-2.border.bg-light
+        code
+          = `$white:    #fff !default;\n`
+          = `$gray-100: #f8f9fa !default;\n`
+          = `$gray-200: #e9ecef !default;\n`
+          = `...\n`
+          = `$body-bg:                   $white !default;\n`
+          = `$body-color:                $gray-900 !default;\n`
+          = `...`
+      p.my-2 To customize Bootstrap, you define these variables with appropreate values you want first and import Bootstrap next. For example, you can change the basic page colors as below.
+      pre.p-2.border.bg-light
+        code
+          = `// Initialize variable to customize before importing Bootstrap\n`
+          = `$body-bg: ivory;        // or #fffff0;\n`
+          = `$body-color: navy;      // or #000080;\n`
+          = `\n`
+          = `// Import Bootstrap (whole library)\n`
+          = `@import "bootstrap/scss/bootstrap";`
+      p.my-2 You can also customize Bootstrap with importing by partials. See 
+        a(href="partials.html") Importing Sass partials
+        |  for detail.
+
+      +breadcrumb1("Home", "How to customize")

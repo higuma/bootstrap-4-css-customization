@@ -1,0 +1,253 @@
+include ../pug-mixins
+
+- const themeColors = "primary secondary success danger warning info light dark".split(" ")
+
+doctype
+html(lang="en")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
+    title Bootstrap 4 customization: Gradient and shadow effects
+    link(rel="stylesheet" href="../css/gradient+shadow.css")
+  body
+    div.container
+      +headerEn("gradient+shadow")
+        p.lead Gradient and shadow effects
+
+      h2#overview Gradients and shadows
+      p.my-2 Bootstrap 4 has built-in custom variables which begin with 
+        code $enable-
+        |  (see 
+        +link("https://getbootstrap.com/docs/4.1/getting-started/theming/#sass-options") Sass options
+        | ). You can enable gradient and shadow effects with setting 
+        code $enable-gradients
+        |  and 
+        code $enable-shadows
+        |  to 
+        code true
+        | .
+      p.my-2 This page shows style variations affected by those variables and compares differences for each component. As differences are slight, you may need to check with an imaging software.
+
+      h2.mt-4#colors
+        +link("https://getbootstrap.com/docs/4.1/utilities/colors/") Colors
+      h4.mt-2.mb-3#colors-background-gradient
+        +link("https://getbootstrap.com/docs/4.1/utilities/colors/#background-gradient") Background gradient
+      each c in themeColors
+        div.row.no-gutters
+          - let textCol = `text-${c == "light" ? "dark" : "white"}`
+          div(class=`col p-3 bg-${c} ${textCol}`)
+            = `.bg-${c}`
+          div(class=`col p-3 bg-gradient-${c} ${textCol}`)
+            = `.bg-gradient-${c}`
+
+      h2.mt-4#code
+        +link("https://getbootstrap.com/docs/4.1/content/code/") Code
+      h4.mt-2#code-user-input
+        +link("https://getbootstrap.com/docs/4.1/content/code/#user-input") User input
+      p.my-2
+        code= `<kbd>`
+        |  is affected by 
+        code $enable-shadows
+        | . But it is difficult to recognize the difference because the background is vary dark (90% gray). See below.
+      p.my-3
+        kbd.noshadow No shadow
+        |  and 
+        kbd With shadow
+        | .
+      p.my-2 Below are modified examples with changing background color to 40% gray (you can see the shadow at bottom).
+      p.my-3
+        kbd.noshadow.lighter No shadow
+        |  and 
+        kbd.lighter With shadow
+
+      h2.mt-4#images
+        +link("https://getbootstrap.com/docs/4.1/content/code/") Images
+      h4.mt-2.mb-3#image-thumbnails
+        +link("https://getbootstrap.com/docs/4.1/content/images/#image-thumbnails") Image thumbnails
+      div.d-flex
+        each opt in [["No", " noshadow"], ["With", ""]]
+          div.flex-column.mr-3
+            div.text-center= `${opt[0]} shadow`
+            div
+              img(class=`img-thumbnail${opt[1]}` src="../img/120x120.svg")
+
+      h2.mt-4.mb-3#alerts
+        +link("https://getbootstrap.com/docs/4.1/components/alerts/") Alerts
+      each c in themeColors
+        div.row.no-gutters
+          div.col.mr-1
+            div(class=` alert alert-${c}-nograd` role="alert")
+              strong= c[0].toUpperCase() + c.slice(1) + ": "
+              | No gradient
+          div.col.ml-1
+            div(class=`alert alert-${c}` role="alert")
+              strong= c[0].toUpperCase() + c.slice(1) + ": "
+              | With gradient
+
+      h2.mt-4.mb-3#buttons
+        +link("https://getbootstrap.com/docs/4.1/components/buttons/") Buttons
+      table
+        each c in themeColors
+          tr
+            td.pr-2
+              code= `.btn.btn-${c}`
+            td
+              button(type="button" class=`btn btn-${c}-nograd-noshadow` style="margin-right: 2px;") No gradient/shadow
+              button(type="button" class=`btn btn-${c}`) With gradient+shadow
+
+      h2.mt-4#carousel
+        +link("https://getbootstrap.com/docs/4.1/components/carousel/") Caroucel
+      h4.mt-2#carousel-with-controls
+        +link("https://getbootstrap.com/docs/4.1/components/carousel/#with-controls") With controls
+      div.d-flex
+        each opt in ["-nograd", ""]
+          div.flex-column
+            div.mb-1.text-center
+              = (opt == "" ? "With" : "No") + " gradient"
+            div.carousel.slide(id=`ex-carousel${opt}` data-ride="carousel")
+              div.carousel-inner
+                each item in [[1,"First"],[2,"Second"],[3,"Third"]]
+                  div(class=`carousel-item${item[0]==1 ? " active" : ""}`)
+                    img.d-block.w-100(src=`../img/slide-${item[0]}.svg` alt=`${item[1]} slide`)
+              each dir in [["prev","Previous"],["next","Next"]]
+                a(class=`carousel-control-${dir[0]}${opt}` href=`#ex-carousel${opt}` role="button" data-slide=dir[0])
+                  span(class=`carousel-control-${dir[0]}-icon` aria-hidden="true")
+                  span.sr-only= dir[1]
+
+      h2.mt-4#dropdown
+        +link("https://getbootstrap.com/docs/4.1/components/dropdowns/") Dropdowns
+      h4.my-2#dropdown-shadow
+        +link("https://getbootstrap.com/docs/4.1/components/dropdowns/#single-button") Shadow behind menu
+
+      each opt in [false, true]
+        div.dropdown.d-inline.mr-1
+          button(class=`btn btn-secondary${opt ? "" : "-nograd-noshadow"}` id=`dropdown-${opt ? "" : "no"}shadow` type="button" data-toggle="dropdown" aria-haspopup="true" area-expanded="false")
+            = `${opt ? "With" : "No"} shadow`
+          div(class=`dropdown-menu${opt ? "" : " noshadow"}` aria-labelledby=`dropdown-${opt ? "" : "no"}shadow`)
+            each n in [1,2,3,4,5]
+              a.dropdown-item(href="#")
+                = `Item ${n}`
+      h4.mt-3.mb-2#dropdown-active
+        +link("https://getbootstrap.com/docs/4.1/components/dropdowns/#active") Active items
+      each opt in [false, true]
+        div.dropdown.d-inline.mr-1
+          button(class=`btn btn-secondary${opt ? "" : "-nograd-noshadow"}` id=`dropdown-active-${opt ? "" : "no"}grad` type="button" data-toggle="dropdown" aria-haspopup="true" area-expanded="false")
+            = `${opt ? "With" : "No"} gradient`
+          div(class=`dropdown-menu${opt ? "" : " noshadow"}` aria-labelledby=`dropdown-active-${opt ? "" : "no"}grad`)
+            each n in [1,2,3,4,5]
+              a(class=`dropdown-item active${opt ? "" : " nograd"}` href="#")
+                = `Active item ${n}`
+
+      h2.mt-4.mb-3#forms
+        +link("https://getbootstrap.com/docs/4.1/components/forms/") Forms
+      div.row
+        each opt in ["No", "With"]
+          div.col.text-center= `${opt} shadow`
+      div.row
+        each opt in [false, true]
+          div.col
+            form
+              div.form-group
+                label(for=`form-text-${opt ? "" : "no"}shadow`) Text input
+                input(class=`form-control${opt ? "" : " noshadow"}` id=`form-text-${opt ? "" : "no"}shadow` type="text" placeholder="Input ...")
+              div.form-group
+                label(for=`form-select-${opt ? "" : "no"}shadow`) Select
+                select(class=`form-control${opt ? "" : " noshadow"}` id=`form-select-${opt ? "" : "no"}shadow`)
+                  each n in [1,2,3,4,5]
+                    option= `Item ${n}`
+              div.form-group
+                label(for=`form-textarea-${opt ? "" : "no"}shadow`) Textarea
+                textarea(class=`form-control${opt ? "" : " noshadow"}` id=`form-textarea-${opt ? "" : "no"}shadow` rows="2")
+
+      h4.mt-2.mb-3#forms-custom-form
+        +link("https://getbootstrap.com/docs/4.1/components/forms/#custom-forms") Custom form controls
+      h5.mt-3
+        +link("https://getbootstrap.com/docs/4.1/components/forms/#checkboxes") Custom checkboxes
+      div.row.mb-1
+        div.col No gradient/shadow
+        div.col With gradient+shadow
+      div.row
+        each opt in [false, true]
+          div.col
+            each n in [1,2,3,4]
+              div(class=`custom-control custom-checkbox${opt ? "" : " nogradshadow"}`)
+                input.custom-control-input(id=`custom-check-${Number(opt)}-${n}` type="checkbox" checked=(n == 1) disabled=(n == 4))
+                label(class=`custom-control-label${opt ? "" : " noshadow"}` for=`custom-check-${Number(opt)}-${n}`)
+                  = `Item ${n}${n == 4 ? " (disabled)" : ""}`
+
+      h5.mt-3
+        +link("https://getbootstrap.com/docs/4.1/components/forms/#radios") Custom radios
+      div.row.mb-1
+        div.col No gradient/shadow
+        div.col With gradient+shadow
+      div.row
+        each opt in [false, true]
+          div.col
+            each n in [1,2,3,4]
+              div(class=`custom-control custom-radio${opt ? "" : " nogradshadow"}`)
+                input.custom-control-input(id=`custom-radio-${Number(opt)}-${n}` type="radio" name=`custom-radio-${Number(opt)}` checked=(n == 1) disabled=(n == 4))
+                label(class=`custom-control-label${opt ? "" : " noshadow"}` for=`custom-radio-${Number(opt)}-${n}`)
+                  = `Item ${n}${n == 4 ? " (disabled)" : ""}`
+      h5.mt-3
+        +link("https://getbootstrap.com/docs/4.1/components/forms/#range") Custom range
+      div.row.text-center
+        div.col No gradient/shadow
+        div.col With gradient+shadow
+      div.row
+        div.col
+          input.custom-range.nogradshadow(type="range")
+        div.col
+          input.custom-range(type="range")
+
+      h2.mt-4.mb-3#modals
+        +link("https://getbootstrap.com/docs/4.1/components/modal/") Modal
+      each opt in [false, true]
+        button(class=`btn btn-secondary${opt ? "" : "-nograd-noshadow"} mr-1` type="button" data-toggle="modal" data-target=`#modal-${opt ? "" : "no"}shadow`)
+          = `${opt ? "With" : "No"} shadow`
+      each opt in [false, true]
+        div.modal.fade(id=`modal-${opt ? "" : "no"}shadow` tabindex="-1" role="dialog" aria-labelledby=`modal-label-${opt ? "" : "no"}shadow` aria-hidden="true")
+          div.modal-dialog(role="document")
+            div(class=`modal-content${opt ? "" : " noshadow"}`)
+              div.modal-header
+                h5.modal-title(id=`modal-label-${opt ? "" : "no"}shadow`) Sample modal
+                button.close(type="button" data-dismiss="modal" aria-label="Close")
+                  span(aria-hidden="true") &times;
+              div.modal-body= `Has ${opt ? "a" : "no"} shadow behind.`
+              div.modal-footer
+                button.btn.btn-secondary(type="button" data-dismiss="modal") Close
+
+      h2.mt-4.mb-3#popovers
+        +link("https://getbootstrap.com/docs/4.1/components/popovers/") Popovers
+      div.d-flex.justify-content-center
+        each opt in [false, true]
+          button(id=`popover-${opt ? "" : "no"}shadow` class=`btn btn-secondary${opt ? "" : "-nograd-noshadow"} mr-1` type="button" data-toggle="popover" title="Sample popover" data-content=`Has ${opt ? "a " : "no"} shadow behind.` data-placement=opt ? "right" : "left")= `${opt ? "With" : "No"} shadow`
+
+      h2.mt-4.mb-3#progress
+        +link("https://getbootstrap.com/docs/4.1/components/progress/") Progress bars
+      div.row.mb-2
+        each opt in ["No", "With"]
+          div.col.text-center= `${opt} shadow`
+      div.row.mb-5
+        each opt in [false, true]
+          div.col
+            div(class=`progress${opt ? "" : " noshadow"}`)
+              div.progress-bar.w-25(role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100")
+
+      +breadcrumb1("Home", "Gradient and shadow effects")
+
+    // JavaScript (jQuery, Popper.js, Bootstrap)
+    script(src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous")
+    script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous")
+
+    script.
+      // enable popovers
+      $('[data-toggle="popover"]').popover();
+      // disable leftside popover's shadow
+      $("#popover-noshadow").on("shown.bs.popover", function(event) {
+        $("#" + this.getAttribute("aria-describedby")).addClass("noshadow");
+      });
+      // set indeterminate states of checkboxes
+      ['#custom-check-0-3', '#custom-check-1-3'].forEach(function(selector) {
+        $(selector).prop('indeterminate', true);
+      });

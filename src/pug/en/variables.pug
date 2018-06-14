@@ -1,0 +1,125 @@
+include ../pug-mixins
+
+doctype
+html(lang="en")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
+    title Bootstrap 4 customization: Manupulating variables
+    link(rel="stylesheet" href="../css/variables.css")
+  body
+    div.container
+      +headerEn("variables")
+        p.lead Manupulating variables
+
+      h2#sass-variables Sass variables
+      p.my-2 Sass variables of Bootstrap source code are defined in 
+        code _variables.scss
+        |  with 
+        code !default
+        |  option. You can change or modify these variables to customize Bootstrap styles.
+
+      h4.mt-3#basic-parameters Basic parameters
+      p.my-2 Variables below are basic parameters for whole style settings.
+      ul
+        li
+          code $font-size-base
+          |  : Base font size (default: 
+          code 1rem
+          | ), affects all font sizes of Bootstrap styles
+        li
+          code $spacer
+          |  : Unit length for 
+          +link(`http://getbootstrap.com/docs/4.1/utilities/spacing/`) Spacing utilities
+          |  (default: 
+          code 1rem
+          | )
+      pre.p-2.border.bg-light
+        code
+          = `// Use 10% smaller fonts\n`
+          = `$font-size-base: 0.9rem;\n`
+          = `\n`
+          = `// import Bootstrap\n`
+          = `@import "bootstrap/scss/bootstrap";\n`
+
+      h4.mt-3#changing-customization-presets Changing customization presets
+      p.my-2 Variables which starts with 
+        code $enable-
+        |  are built-in customization presets (see 
+        +link("https://getbootstrap.com/docs/4.1/getting-started/theming/#sass-options") Sass options
+        |  for the full listing). For example, gradients and shadows are disabled as default (on version 4.1.1). You can enable those options with an extension code as bellow.
+      div
+        code gradient+shadow.scss
+        |  (beginning part)
+      pre.p-2.border.bg-light
+        code
+          = `// initialize customization variables\n`
+          = `$enable-gradients: true;\n`
+          = `$enable-shadows: true;\n`
+          = `\n`
+          = `// import Bootstrap\n`
+          = `@import "bootstrap/scss/bootstrap";\n`
+          = `...`
+      p.my-2 See 
+        a(href="gradient+shadow.html") Gradation and shadow effects
+        |  to check differences of visual representations.
+
+      h4.mt-3#modifying-map-variables Modifying map variables
+      p.my-2 Sass suppots various types of variables (see 
+        +link("https://sass-lang.com/documentation/file.SASS_REFERENCE.html#data_types") Data Types
+        | ). Most variables are scalar (numbers, strings, colors, booleans, and null). But variables below are defined as key-value maps.
+      ul
+        each v in [["grays", "Gray scale presets"], ["colors", "Basic colors (blue, indigo, purple, ...)"], ["theme-colors", "Bootstrap theme colors (primary, secondary, success,  ...)"]]
+          li
+            code= `\$${v[0]}`
+            = ` : ${v[1]}`
+        each v in [["spacers", "spacing"], ["sizes", "sizing"]]
+          li
+            code= `\$${v[0]}`
+            |  : Preset values of 
+            +link(`http://getbootstrap.com/docs/4.1/utilities/${v[1]}/`)
+              = `${v[1][0].toUpperCase() + v[1].slice(1)} utitilies`
+        li
+          code $grid-breakpoints
+          |  : 
+          +link("http://getbootstrap.com/docs/4.1/layout/grid/") Grid
+          |  breakpoint (viewport width) presets
+        li
+          code $container-max-widths
+          |  : 
+          +link("http://getbootstrap.com/docs/4.1/layout/grid/") Grid
+          |  container width for each breakpoints
+      p.my-2 You can also modify these variables. Adding and changing values are easy.
+      div
+        code variables.scss
+        |  (Sass source for this page)
+      pre.p-2.border.bg-light
+        code
+          = `// Example: Modify $theme-colors\n`
+          = `$theme-colors: (\n`
+          = `  // change "success" from green to teal\n`
+          = `  "success": #20c997,\n`
+          = `  // add "custom" to orange\n`
+          = `  "custom": #fd7e14\n`
+          = `);\n`
+          = `\n`
+          = `// import Bootstrap\n`
+          = `@import "bootstrap/scss/bootstrap";\n`
+      p.my-2 Below are live alert samples (compare with Bootstrap default colors ⇒ see 
+        +link("http://getbootstrap.com/docs/4.1/components/alerts/#examples") Official document examples
+        | ).
+      div.alert.alert-success Success alert (changed from green to teal) - 
+        code div.alert.alert-success
+      div.alert.alert-custom Custom alert (orange) - 
+        code div.alert.alert-custom
+      p.my-2 You can also remove existing map entries using 
+        +link("https://sass-lang.com/documentation/Sass/Script/Functions.html") Sass builtin functions
+        |  (search 
+        code map-remove($map, $keys...)
+        |  of 
+        code map-functions
+        | ). But you have to import partials invidually. See 
+        +link("http://getbootstrap.com/docs/4.1/getting-started/theming/#remove-from-map") Remove from map
+        |  of the official document for detail.
+
+      +breadcrumb1("Home", "Manupulating variables")

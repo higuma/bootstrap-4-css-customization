@@ -1,0 +1,10 @@
+// Example: Modify $theme-colors
+$theme-colors: (
+  // change "success" from green to teal
+  "success": #20c997,
+  // add "custom" to orange
+  "custom": #fd7e14
+);
+
+// import Bootstrap
+@import "bootstrap/scss/bootstrap";

@@ -1,0 +1,38 @@
+mixin link(url)
+  a(href=url target="_blank")
+    block
+
+mixin headerEn(name)
+  div.row
+    div.col-auto.mr-auto
+      h1.display-4.mb-0 Bootstrap 4 CSS customization
+      block
+    div.col-auto
+      +link("https://github.com/higuma/bootstrap-4-css-customization/")
+        img.mr-2.my-3(src="../img/GitHub-Mark-32px.png")
+      |  en | 
+      a(href=`../ja/${name}.html`) ja
+
+mixin headerJa(name)
+  div.row
+    div.col-auto.mr-auto
+      h1.display-4.mb-0 Bootstrap 4 CSS customization
+      block
+    div.col-auto
+      +link("https://github.com/higuma/bootstrap-4-css-customization")
+        img.mr-2.my-3(src="../img/GitHub-Mark-32px.png")
+      |  ja | 
+      a(href=`../en/${name}.html`) en
+
+
+mixin breadcrumb0(home)
+  nav.mt-4.mb-5(aria-label="breadcrumb")
+    ol.breadcrumb
+      li.breadcrumb-item.active(aria-current="page")= home
+
+mixin breadcrumb1(home, current)
+  nav.mt-4.mb-5(aria-label="breadcrumb")
+    ol.breadcrumb
+      li.breadcrumb-item
+        a(href="index.html")= home
+      li.breadcrumb-item.active(aria-current="page")= current

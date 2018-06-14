@@ -1,0 +1,131 @@
+include ../pug-mixins
+
+doctype
+html(lang="en")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
+    title Bootstrap 4 customization: Sass変数の操作
+    link(rel="stylesheet" href="../css/variables.css")
+  body
+    div.container
+      +headerJa("variables")
+        p.lead Sass変数の操作
+
+      h2#sass-variables Sass変数
+      p.my-2 BootstrapソースコードのSass変数は
+        code _variables.scss
+        | に
+        code !default
+        | オプション付きで定義されている。これらを操作することによりBootstrapのスタイルをカスタマイズすることができる。
+
+      h4.mt-3#basic-parameters 基本パラメータ
+      p.my-2 次の変数はスタイル全体に影響する基本パラメータ。
+      ul
+        li
+          code $font-size-base
+          |  : フォントサイズの基準(デフォルト値 
+          code 1rem
+          | )、全てのフォントサイズに影響を与える
+        li
+          code $spacer
+          |  : 
+          +link(`http://getbootstrap.com/docs/4.1/utilities/spacing/`) 空間ユーティリティ
+          | の基準単位(デフォルト値 
+          code 1rem
+          | )
+      pre.p-2.border.bg-light
+        code
+          = `// 例: 全体的にフォントサイズを1割小さくする\n`
+          = `$font-size-base: 0.9rem;\n`
+          = `\n`
+          = `// Bootstrapをインポート\n`
+          = `@import "bootstrap/scss/bootstrap";\n`
+
+      h4.mt-3#changing-customization-presets カスタマイズ用プリセット変数
+      p.my-2 カスタマイズ用のプリセット変数があり、これらは
+        code $enable-
+        | で始まる名前を持つ。一覧は公式ドキュメントの
+        +link("https://getbootstrap.com/docs/4.1/getting-started/theming/#sass-options") Sass options
+        | を参照。例えばグラデーションとシャドウの効果はデフォルトでは無効(
+        code false
+        | )に設定されているが(バージョン4.1.1の場合)、次のように有効化できる。
+      div
+        code gradient+shadow.scss
+        |  (先頭部分)
+      pre.p-2.border.bg-light
+        code
+          = `// カスタマイズ用プリセット変数を設定\n`
+          = `$enable-gradients: true;\n`
+          = `$enable-shadows: true;\n`
+          = `\n`
+          = `// Bootstrapをインポート\n`
+          = `@import "bootstrap/scss/bootstrap";\n`
+          = `...`
+      p.my-2 これらを有効化した場合の表示効果の違いは
+        a(href="gradient+shadow.html") グラデーションとシャドウ
+        | を参照(実際に違いを比較できる)。
+
+      h4.mt-3#modifying-map-variables マップ変数の操作
+      p.my-2 Sass変数には様々な型の値を設定できる(言語マニュアルの
+        +link("https://sass-lang.com/documentation/file.SASS_REFERENCE.html#data_types") Data Types
+        | を参照)。Bootstrapソースが用いている変数は大部分スカラー型(数、文字列、色、真偽値、null)だが、次の変数はキー/値のマップ型で定義されている。
+      ul
+        each v in [["grays", "グレースケールのプリセット値"], ["colors", "基本色 (blue, indigo, purple, ...)"], ["theme-colors", "Bootstrapのテーマ色 (primary, secondary, success,  ...)"]]
+          li
+            code= `\$${v[0]}`
+            = ` : ${v[1]}`
+        each v in [["spacers", "spacing", "空白"], ["sizes", "sizing", "サイズ"]]
+          li
+            code= `\$${v[0]}`
+            |  : 
+            +link(`http://getbootstrap.com/docs/4.1/utilities/${v[1]}/`)
+              = `${v[2]}ユーティリティ`
+            | のプリセット値
+        li
+          code $grid-breakpoints
+          |  : 
+          +link("http://getbootstrap.com/docs/4.1/layout/grid/") グリッド
+          | のブレークポイント(ビューポート幅)プリセット値
+        li
+          code $container-max-widths
+          |  : 
+          +link("http://getbootstrap.com/docs/4.1/layout/grid/") グリッド
+          | の各ブレークポイントに対し
+          +link("https://getbootstrap.com/docs/4.1/layout/overview/#containers") コンテナ
+          |  に設定される幅
+      p.my-2 これらの値も変更可能で、追加や値の変更は次のように容易に行うことができる。
+      div
+        code variables.scss
+        |  (本ページのSassソース)
+      pre.p-2.border.bg-light
+        code
+          = `// 例: $theme-colorsへの追加・変更\n`
+          = `$theme-colors: (\n`
+          = `  // "success" をgreenからtealに変更\n`
+          = `  "success": #20c997,\n`
+          = `  // "custom"を追加(色の値はorange)\n`
+          = `  "custom": #fd7e14\n`
+          = `);\n`
+          = `\n`
+          = `// Bootstrapをインポート\n`
+          = `@import "bootstrap/scss/bootstrap";\n`
+      p.my-2 次は実際に設定したもののサンプル(Bootstrapデフォルト状態と比較すること ⇒ 公式ドキュメントの
+        +link("http://getbootstrap.com/docs/4.1/components/alerts/#examples") Official document examples
+        | を参照).
+      div.alert.alert-success アラートサンプル(success) (色をgreenからtealに変更) - 
+        code div.alert.alert-success
+      div.alert.alert-custom アラートサンプル(custom) (色はorangeに設定) - 
+        code div.alert.alert-custom
+      p.my-2 逆に(使わない)キーを削除することも可能だがやや難しくなる(ただしこれが必要になることはあまりないので以下参考)。これにはまずSass組み込み関数の知識が必要。マップの操作は
+        +link("https://sass-lang.com/documentation/Sass/Script/Functions.html") 組み込み関数
+        | を用いる(言語マニュアルの
+        code map-functions
+        | または
+        code map-remove($map, $keys...)
+        | を検索すればその付近に説明がある)。
+      p.my-2 またBootstrapのインポートは全体丸ごとではなくパーシャルごとに行う必要がある。コード例が公式ドキュメントの
+        +link("http://getbootstrap.com/docs/4.1/getting-started/theming/#remove-from-map") Remove from map
+        | にあるので参照すること。
+
+      +breadcrumb1("ホーム", "Sass変数の操作")

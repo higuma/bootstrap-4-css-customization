@@ -1,0 +1,82 @@
+include ../pug-mixins
+
+doctype
+html(lang="en")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
+    title Bootstrap 4 CSS customization
+    link(rel="stylesheet" href="../css/index.css")
+  body
+    div.container
+      +headerEn("index")
+      h2.mt-4.mb-3#toc Table of contents
+      ul
+        li
+          a(href="#about") About this tutorial
+        li.mb-2
+          a(href="#sass") Learning Sass
+        li
+          a(href="howto.html") How to customize
+        li
+          a(href="partials.html") Importing Sass partials
+        li
+          a(href="variables.html") Manupulating variables
+        li
+          a(href="mixins.html") Using Sass mixins
+        li
+          a(href="gradient+shadow.html") Gradient and shadow effects
+      h2.mt-4#about About this tutorial
+      p.my-2 This short turorial explains how to customize Bootstrap 4 styles. Bootstrap CSS is written in 
+        +link("https://sass-lang.com/") Sass
+        | . You can customize styles by extending Bootstrap source code. Usually you do not have to modify original code.
+      p.my-2 The tutorial is written in 
+        +link("https://pugjs.org/") pug
+        |  and built with 
+        +link("https://npmjs.org/") npm
+        |  on 
+        +link("https://nodejs.org/") node.js
+        | . The 
+        +link("https://github.com/higuma/bootstrap-4-css-customization") source code
+        |  is maintained by 
+        +link("https://github.com/") GitHub
+        | . The site is hosted by 
+        +link("https://pages.github.com/") GitHub Pages
+        | .
+
+      h2.mt-4#sass Learning Sass
+      p.my-2 Sass is required to customize Bootstrap. But Bootstrap source code is also good material to study Sass. You can read Bootstrap code and study Sass with referencing Sass documents.
+      p.my-2 Sass was originally coded in Ruby and several implementations have been created for other languages (see 
+        +link("https://en.wikipedia.org/wiki/Sass_(stylesheet_language)") Wikipedia
+        | ). Three official implementations exist (
+        +link("https://sass-lang.com/ruby-sass") Ruby
+        | , 
+        +link("https://sass-lang.com/libsass") C++
+        | , and 
+        +link("https://sass-lang.com/dart-sass") Dart
+        | ).
+      p.my-2 The following are selected documents for studying Sass. It is imcomplete but propably enough for you.
+      ul
+        li
+          +link("https://sass-lang.com/documentation/file.SASS_REFERENCE.html") Sass reference
+          |  (for Ruby-Sass)
+          ul
+            li
+              +link("https://sass-lang.com/documentation/Sass/Script/Functions.html") Sass builtin functions
+            li No command line reference (see 
+              code sass --help
+              | )
+        li 
+          +link("https://github.com/sass/libsass") libsass
+          |  (C++ implementation)
+          ul
+            li
+              +link("https://github.com/sass/node-sass") node-sass
+              |  (node.js interface, used in this tutorial)
+              ul
+                li
+                  +link("https://github.com/sass/node-sass#command-line-interface") node-sass CLI
+        li
+          +link("https://en.wikipedia.org/wiki/Sass_(stylesheet_language)") Wikipedia: Sass (Stylesheet language)
+
+      +breadcrumb0("Home")

@@ -1,0 +1,59 @@
+include ../pug-mixins
+
+doctype
+html(lang="en")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
+    title Bootstrap 4 customization: Using Sass mixins
+    link(rel="stylesheet" href="../css/mixins.css")
+  body
+    div.container
+      +headerEn("mixins")
+        p.lead Using Sass mixins
+      h2#partials
+        +link("https://sass-lang.com/documentation/file.SASS_REFERENCE.html#mixins") Mixins
+      p.my-2 Bootstrap Sass source code uses (over 60) 
+        +link("https://sass-lang.com/documentation/file.SASS_REFERENCE.html#mixins") mixins
+        |  defined in partial files at 
+        code mixins/
+        |  subdirectory (see 
+        +link("https://github.com/twbs/bootstrap/tree/v4.1.1/scss/mixins") GitHub repo
+        | ). They are made for building bootstrap CSS library. But they are also useful for making your own CSS code. Use 
+        +link("https://sass-lang.com/documentation/file.SASS_REFERENCE.html#including_a_mixin")
+          code.text-danger @include
+          |  directive
+        | .
+      p.my-2 The example below is a simple demo using a Bootstrap Sass mixin 
+        code resizable($direction)
+        | , which is defined in 
+        code {bootstrap}/scss/mixins/_resize.scss
+        | .
+      div
+        code mixins.scss
+        |  (Sass source for this page)
+
+      pre.p-2.mb-4.border.bg-light
+        code
+          = `// import bootstrap\n`
+          = `@import "bootstrap/scss/bootstrap";\n`
+          = `\n`
+          = `// Add "resizable" utility class\n`
+          = `.resizable {\n`
+          = `  @include resizable(both);\n`
+          = `}`
+
+      p.my-2
+        strong DEMO: 
+        | The alert below is resizable with 
+        code .resizable
+        |  utility class, which is made with Bootstrap Sass mixin 
+        code resizable($direction)
+        | .
+      div.alert.alert-success.resizable
+        p.my-0.resizable.bg-light This inner paragraph is also resizable with 
+          code .resizable
+          |  utility class, which is made with Bootstrap Sass mixin 
+          code resizable($direction)
+
+      +breadcrumb1("Home", "Using Sass mixins")

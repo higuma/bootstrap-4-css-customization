@@ -1,0 +1,155 @@
+// initialize customization variables
+$enable-gradients: true;
+$enable-shadows: true;
+
+// import Bootstrap
+@import "bootstrap/scss/bootstrap";
+
+// unset customization variables for comparizon
+$enable-gradients: false;
+$enable-shadows: false;
+
+// define classes with canceling castomizations for comparizon
+//------------------------------------------------------------
+
+// general
+.noshadow {
+  box-shadow: none;
+}
+
+// code
+kbd.lighter {
+  background-color: $gray-400;
+}
+
+// alert
+@each $color, $value in $theme-colors {
+  .alert-#{$color}-nograd {
+    @include alert-variant(theme-color-level($color, $alert-bg-level), theme-color-level($color, $alert-border-level), theme-color-level($color, $alert-color-level));
+  }
+}
+
+// button
+@each $color, $value in $theme-colors {
+  .btn-#{$color}-nograd-noshadow {
+    @include button-variant($value, $value);
+  }
+}
+
+// carousel (borrowed from _carousel.scss)
+.carousel-control-prev-nograd,
+.carousel-control-next-nograd {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  // Use flex for alignment (1-3)
+  display: flex; // 1. allow flex styles
+  align-items: center; // 2. vertically center contents
+  justify-content: center; // 3. horizontally center contents
+  width: $carousel-control-width;
+  color: $carousel-control-color;
+  text-align: center;
+  opacity: $carousel-control-opacity;
+  // We can't have a transition here because WebKit cancels the carousel
+  // animation if you trip this while in the middle of another animation.
+
+  // Hover/focus state
+  @include hover-focus {
+    color: $carousel-control-color;
+    text-decoration: none;
+    outline: 0;
+    opacity: .9;
+  }
+}
+
+.carousel-control-prev-nograd {
+  left: 0;
+}
+
+.carousel-control-next-nograd {
+  right: 0;
+}
+
+// dropdown
+.dropdown-item.nograd {
+  &.active,
+  &:active {
+    color: $dropdown-link-active-color;
+    text-decoration: none;
+    background: $dropdown-link-active-bg;
+  }
+}
+
+// custom form control
+.custom-control-label.noshadow {
+  &::before {
+    box-shadow: none;
+  }
+}
+
+// checkbox
+.custom-checkbox.nogradshadow {
+  .custom-control-input:checked ~ .custom-control-label {
+    &::before {
+      background: $custom-control-indicator-checked-bg;
+    }
+  }
+
+  .custom-control-input:indeterminate ~ .custom-control-label {
+    &::before {
+      background: $custom-checkbox-indicator-indeterminate-bg;
+      box-shadow: none;
+    }
+  }
+}
+
+// custom radio
+.custom-radio.nogradshadow {
+  .custom-control-input:checked ~ .custom-control-label {
+    &::before {
+      background: $custom-control-indicator-checked-bg;
+    }
+  }
+}
+
+// custom range
+.custom-range.nogradshadow {
+  &::-webkit-slider-thumb {
+    background: $custom-range-thumb-bg;
+    box-shadow: none;
+
+    &:active {
+      background: $custom-range-thumb-active-bg;
+    }
+  }
+
+  &::-webkit-slider-runnable-track {
+    box-shadow: none;
+  }
+
+  &::-moz-range-thumb {
+    background: $custom-range-thumb-bg;
+    box-shadow: none;
+
+    &:active {
+      background: $custom-range-thumb-active-bg;
+    }
+  }
+
+  &::-moz-range-track {
+    box-shadow: none;
+  }
+
+  &::-ms-thumb {
+    background: $custom-range-thumb-bg;
+    box-shadow: none;
+
+    &:active {
+      background: $custom-range-thumb-active-bg;
+    }
+  }
+
+  &::-ms-track {
+    box-shadow: none;
+  }
+}

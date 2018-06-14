@@ -1,0 +1,60 @@
+include ../pug-mixins
+
+doctype
+html(lang="en")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
+    title Bootstrap 4 customization: Importing Sass partials
+    link(rel="stylesheet" href="../css/partials.css")
+  body
+    div.container
+      +headerEn("partials")
+        p.lead Importing Sass partials
+      h2#partials
+        +link("https://sass-lang.com/documentation/file.SASS_REFERENCE.html#partials") Partials
+      Partials
+      p.my-2 Bootstrap Sass source code is made of multiple 
+        code .scss
+        |  source files (see 
+        +link("https://github.com/twbs/bootstrap/tree/v4.1.1/scss") GitHub repo
+        | ). They are classified into two types by purpose.
+      ul
+        li Library target sources 
+          ul
+            li: code bootstrap.scss
+            li: code bootstrap.grid.scss
+            li: code bootstrap.reboot.scss
+        li
+          +link("https://sass-lang.com/documentation/file.SASS_REFERENCE.html#partials") Partials
+          |  - all others
+          ul
+            li Begins with underscore (e.g. 
+              code _functions.scss
+              | )
+            li Module files for library targets and/or other modules
+      p.my-2 You can use 
+        +link("https://sass-lang.com/documentation/file.SASS_REFERENCE.html#import")
+          code @import
+        |  statement to use partials. You do not have to type underscores. But you ought to read source files and analize partial dependencies.
+      p.my-2 This page uses only limited features of Bootstrap styles. We can import just required Sass partials to optimize CSS (see below). Size is reduced from 138k to 34k (for Bootstrap 4.1.1).
+      div: code partials.scss
+      pre.p-2.mb-4.border.bg-light
+        code
+          = `// import required partials\n`
+          = `@import "bootstrap/scss/functions";\n`
+          = `@import "bootstrap/scss/variables";\n`
+          = `@import "bootstrap/scss/mixins";\n`
+          = `\n`
+          = `// import minimum partials used for this page\n`
+          = `@import "bootstrap/scss/root";\n`
+          = `@import "bootstrap/scss/reboot";\n`
+          = `@import "bootstrap/scss/type";\n`
+          = `@import "bootstrap/scss/code";\n`
+          = `@import "bootstrap/scss/grid";\n`
+          = `@import "bootstrap/scss/breadcrumb";\n`
+          = `@import "bootstrap/scss/utilities/background";\n`
+          = `@import "bootstrap/scss/utilities/borders";\n`
+          = `@import "bootstrap/scss/utilities/spacing";\n`
+
+      +breadcrumb1("Home", "Importing Sass partials")

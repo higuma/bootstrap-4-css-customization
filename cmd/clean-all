@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+npm run clean
+rm -rf node_modules
+rm package-lock.json
