@@ -1,0 +1,16 @@
+<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><title>Bootstrap 4 customization: Sassパーシャルのインポート</title><link rel="stylesheet" href="../css/partials.css"></head><body><div class="container"><div class="row"><div class="col-auto mr-auto"><h1 class="display-4 mb-0">Bootstrap 4 CSS customization</h1><p class="lead">Sassパーシャルのインポート</p></div><div class="col-auto"><a href="https://github.com/higuma/bootstrap-4-css-customization" target="_blank"><img class="mr-2 my-3" src="../img/GitHub-Mark-32px.png"/></a> ja | <a href="../en/partials.html">en</a></div></div><h2 id="partials"><a href="https://sass-lang.com/documentation/file.SASS_REFERENCE.html#partials" target="_blank">パーシャル</a></h2><p class="my-2">Bootstrap Sassソースコードは多数の<code>.scss</code>ファイルで構成されている(一覧は<a href="https://github.com/twbs/bootstrap/tree/v4.1.1/scss" target="_blank">GitHubリポジトリ</a>を参照)。これらは用途により2種類に分類される。</p><ul><li>ライブラリターゲット(配布用プリコンパイル版)生成用<ul><li><code>bootstrap.scss</code></li><li><code>bootstrap.grid.scss</code></li><li><code>bootstrap.reboot.scss</code></li></ul></li><li><a href="https://sass-lang.com/documentation/file.SASS_REFERENCE.html#partials" target="_blank">パーシャル</a> - その他全て<ul><li>ファイル名がアンダースコアで始まる(例: <code>_functions.scss</code>)</li><li>モジュールファイルで、上記ターゲットや他のモジュールから参照される</li></ul></li></ul><p class="my-2">パーシャルのインポートには<a href="https://sass-lang.com/documentation/file.SASS_REFERENCE.html#import" target="_blank"><code>@import</code></a>文を用いる。パーシャルは伝統的にファイル名先頭にアンダースコアを用いるが、<code>@import</code>文ではこれを省略できる(書いてもよいが通常書かない)。</p><p class="my-2">本ページはBootstrapの全機能のうちほんの一部しか利用していないので、使用パーシャルを調べてそれらだけインポートすればサイズを削減できる(ただし多少のコード解読と解析が必要)。以下の例(本ページのCSS用)を用いて全機能(138k)に比べて34kにまで削減できる(バージョン4.1.1の場合)。</p><div><code>partials.scss</code></div><pre class="p-2 mb-4 border bg-light"><code>// 必須パーシャルをインポート
+@import &quot;bootstrap/scss/functions&quot;;
+@import &quot;bootstrap/scss/variables&quot;;
+@import &quot;bootstrap/scss/mixins&quot;;
+
+// 本ページに用いられている最小限のパーシャルだけ選んでインポート
+@import &quot;bootstrap/scss/root&quot;;
+@import &quot;bootstrap/scss/reboot&quot;;
+@import &quot;bootstrap/scss/type&quot;;
+@import &quot;bootstrap/scss/code&quot;;
+@import &quot;bootstrap/scss/grid&quot;;
+@import &quot;bootstrap/scss/breadcrumb&quot;;
+@import &quot;bootstrap/scss/utilities/background&quot;;
+@import &quot;bootstrap/scss/utilities/borders&quot;;
+@import &quot;bootstrap/scss/utilities/spacing&quot;;
+</code></pre><nav class="mt-4 mb-5" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="index.html">ホーム</a></li><li class="breadcrumb-item active" aria-current="page">Sassパーシャルのインポート</li></ol></nav></div></body></html>
