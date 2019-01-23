@@ -18,7 +18,7 @@
 
 この短いチュートリアルはBootstrap 4のスタイルをカスタマイズする方法についての解説です。Bootstrap CSSは[Sass](https://sass-lang.com/)で記述されており、拡張コードを書き加えることによりカスタマイズすることができます(通常Bootstrapのライブラリソースコードを書き換える必要はありません)。
 
-このチュートリアルは[pug](https://pugjs.org/)で記述し、[node.js](https://pugjs.org/)上の[npm](https://npmjs.org/)でビルドしています。[ソースコード]は[GitHub](https://github.com/)、サイトは[GitHub Pages](https://pages.github.com/)で公開しています。
+このチュートリアルは[pug](https://pugjs.org/)で記述し、[node.js](https://pugjs.org/)上の[npm](https://npmjs.org/)でビルドしています。ソースコードは[GitHub](https://github.com/)、サイトは[GitHub Pages](https://pages.github.com/)で公開しています。
 
 ## Sassの学習
 
