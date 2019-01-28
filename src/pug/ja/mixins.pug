@@ -1,5 +1,9 @@
 include ../pug-mixins
 
+mixin navigation
+  +nav-mid("Sass変数の操作", "variables.html", "グラデーションとシャドウ", "gradient+shadow.html")
+    block
+
 doctype
 html(lang="ja")
   head
@@ -9,7 +13,8 @@ html(lang="ja")
     link(rel="stylesheet" href="../css/mixins.css")
   body
     div.container
-      +headerJa("mixins")
+      +header-ja("mixins")
+      +navigation
         p.lead Sassミックスインの利用
       h2#partials
         +link("https://sass-lang.com/documentation/file.SASS_REFERENCE.html#mixins") ミックスイン
@@ -56,11 +61,15 @@ html(lang="ja")
         |  ユーティリティクラスの応用例で、縦横ともサイズ変更できる。さらに内部のパラグラフも 
         code .resizable
         |  でサイズ変更できるようにしてある。
-      div.alert.alert-success.resizable
+      div.alert.alert-success.resizable.mb-4
         p.my-0.resizable.bg-light 内側のパラグラフ(ここにも 
           code .resizable
           |  ユーティリティ使用)。Bootstrap Sassミックスイン
           code resizable($direction)
           |  を利用し、縦横ともサイズ変更できるように設定されている。
 
-      +breadcrumb1("ホーム", "Sassミックスインの利用") 
+      +navigation
+      +breadcrumb-1("ホーム", "Sassミックスインの利用") 
+
+    +script-jquery
+    +script-js

@@ -1,5 +1,9 @@
 include ../pug-mixins
 
+mixin navigation
+  +nav-mid("ホーム", "index.html", "Sassパーシャルのインポート", "partials.html")
+    block
+
 doctype
 html(lang="ja")
   head
@@ -9,7 +13,8 @@ html(lang="ja")
     link(rel="stylesheet" href="../css/howto.css")
   body
     div.container
-      +headerJa("howto")
+      +header-ja("howto")
+      +navigation
         p.lead カスタマイズの方法
 
       h2#overview カスタマイズの手順
@@ -57,32 +62,32 @@ html(lang="ja")
         | と
         +link("https://github.com/browserslist/browserslist#full-list") Full List
         | を参照)。本チュートリアルは
-        +link("https://github.com/twbs/bootstrap/tree/v4.1.1") Bootstrap 4.1.1
-        | のソースコードを用いており、その
-        +link("https://github.com/twbs/bootstrap/blob/v4.1.1/package.json")
-          code.text-danger package.json
+        +link("https://github.com/twbs/bootstrap/tree/v4.2.1") Bootstrap 4.2.1
+        | のソースコードを用いており、
+        +link("https://github.com/twbs/bootstrap/blob/v4.2.1/.browserslistrc")
+          code.text-danger .browserslistrc
         | から設定を引用している(下記参照)。この情報をAutoprefixerが参照し、各CSSプロパティに対してベンダープリフィクスの追加や除去を行う。
       div
-        code package.json
-        |  (一部)
+        code .browserslistrc
       pre.p-2.border.bg-light
         code
-          = `"browserslist": [\n`
-          = `  "last 1 major version",\n`
-          = `  ">= 1%",\n`
-          = `  "Chrome >= 45",\n`
-          = `  "Firefox >= 38",\n`
-          = `  "Edge >= 12",\n`
-          = `  "Explorer >= 10",\n`
-          = `  "iOS >= 9",\n`
-          = `  "Safari >= 9",\n`
-          = `  "Android >= 4.4",\n`
-          = `  "Opera >= 30"\n`
-          = `]`
+          = `# https://github.com/browserslist/browserslist#readme\n`
+          = `\n`
+          = `>= 1%\n`
+          = `last 1 major version\n`
+          = `not dead\n`
+          = `Chrome >= 45\n`
+          = `Firefox >= 38\n`
+          = `Edge >= 12\n`
+          = `Explorer >= 10\n`
+          = `iOS >= 9\n`
+          = `Safari >= 9\n`
+          = `Android >= 4.4\n`
+          = `Opera >= 30\n`
       h4.mt-3#mt-4minifier (オプション) CSS圧縮ツール
-      p.my-2 CSS圧縮ツールでサイズ圧縮を行うのは一般的なサイト最適化方法のひとつでツールも数多い。本チュートリアルは開発環境に
+      p.my-2 CSS圧縮ツールでサイズ圧縮を行うのは一般的なサイト最適化方法のひとつでツールも数多い。ここでは本チュートリアルが開発環境に用いている
         +link("https://www.nodejs.com/") node.js
-        | を用いているが、node用CSS圧縮ツールも多数ある。
+        | 用の主要CSS圧縮ツールのみ示す。
       ul
         li
           +link("https://github.com/jakubpawlowicz/clean-css") clean-css
@@ -91,23 +96,42 @@ html(lang="ja")
           ul
             li
               +link("https://github.com/hail2u/node-csswring") csswring
-              |  - 本チュートリアルで使用(扱いが簡単)
+              |  - 本チュートリアルのビルドにまぎあれこ使用(扱いが簡単)
             li
               +link("https://github.com/ben-eb/cssnano") cssnano
               |  - 有名で高機能、ただしやや難しい(正しく使わないと副作用あり)
       h4.mt-3#build-tool ビルドツール
       p.my-2 作業の効率化には何らかのビルドツールが必要だが好みのツールでよい(GNU makeやApache Ant等も可)。本チュートリアルは開発環境にnode.jsを用いているが(理由はAutoprefixerがnode.js専用で代替ツールがないため)、node.js用ビルドツール(タスクランナー)には有名なものが多数ある(WebPack, Gulp, Grunt等)。
-      p.my-2 本チュートリアルではビルドツールに
+      h5.mt-3#building-tutorial チュートリアルのビルド
+      p.my-2
         +link("https://npmjs.com/") npm
-        | を用いている。npmは本来node.js用パッケージマネージャだが簡単なビルドツールにもなる。操作は
-        code npm run[-script]
-        | コマンド(
-        +link("https://docs.npmjs.com/cli/run-script") リファレンス
-        | 参照)で行い、全コマンドは
+        | は本来はnode.js用パッケージマネージャだが簡単なビルドツールとしても利用できる。本チュートリアルはビルドツールにnpmを用いており、次の手順で実際にビルドできる。
+      ol
+        li GitHubから
+          +link("https://github.com/higuma/bootstrap-4-css-customization/archive/master.zip") ソース
+          | をダウンロードして解凍
+        li
+          code npm install
+          |  で初期設定(インストール)
+        li
+          code npm run build
+          |  でビルド実行 (
+          code ./site/*
+          |  にファイルを生成)
+        li
+          code npm run start
+          |  でローカルサーバ起動 (
+          code http://localhost:8888/
+          | )
+      p.my-2 その他の開発用コマンドは
         +link("https://github.com/higuma/bootstrap-4-css-customization/blob/master/package.json") package.json
         | 中の
         code "scripts:"
-        | フィールドに記述してある。
+        | フィールドを参照。ここにコマンドを登録して、
+        code npm run[-script]
+        |  (⇒ 
+        +link("https://docs.npmjs.com/cli/run-script") リファレンス
+        | )を用いて実行している。
 
       h2.mt-4#bootstrap-sass Bootstrap Sassソースコード
       p.my-2 Bootstrap Sassソースコードは
@@ -170,8 +194,12 @@ html(lang="ja")
           = `\n`
           = `// Bootstrapを全体丸ごとインポート\n`
           = `@import "bootstrap/scss/bootstrap";`
-      p.my-2 より細かくパーシャル単位でソースをインポートする方法もある。詳しくは
+      p.mt-2.mb-4 より細かくパーシャル単位でソースをインポートする方法もある。詳しくは
         a(href="partials.html") Sassパーシャルのインポート
         | を参照。
 
-      +breadcrumb1("ホーム", "カスタマイズの方法")
+      +navigation
+      +breadcrumb-1("ホーム", "カスタマイズの方法")
+
+    +script-jquery
+    +script-js

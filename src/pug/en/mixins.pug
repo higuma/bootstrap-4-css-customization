@@ -1,5 +1,9 @@
 include ../pug-mixins
 
+mixin navigation
+  +nav-mid("Manupulating variables", "variables.html", "Gradient and shadow effects", "gradient+shadow.html")
+    block
+
 doctype
 html(lang="en")
   head
@@ -9,7 +13,8 @@ html(lang="en")
     link(rel="stylesheet" href="../css/mixins.css")
   body
     div.container
-      +headerEn("mixins")
+      +header-en("mixins")
+      +navigation
         p.lead Using Sass mixins
       h2#partials
         +link("https://sass-lang.com/documentation/file.SASS_REFERENCE.html#mixins") Mixins
@@ -50,10 +55,14 @@ html(lang="en")
         |  utility class, which is made with Bootstrap Sass mixin 
         code resizable($direction)
         | .
-      div.alert.alert-success.resizable
+      div.alert.alert-success.resizable.mb-4
         p.my-0.resizable.bg-light This inner paragraph is also resizable with 
           code .resizable
           |  utility class, which is made with Bootstrap Sass mixin 
           code resizable($direction)
 
-      +breadcrumb1("Home", "Using Sass mixins")
+      +navigation
+      +breadcrumb-1("Home", "Using Sass mixins")
+
+    +script-jquery
+    +script-js

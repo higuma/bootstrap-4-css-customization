@@ -1,5 +1,9 @@
 include ../pug-mixins
 
+mixin navigation
+  +nav-mid("Sassパーシャルのインポート", "partials.html", "Sassミックスインの利用", "mixins.html")
+    block
+
 doctype
 html(lang="en")
   head
@@ -9,7 +13,8 @@ html(lang="en")
     link(rel="stylesheet" href="../css/variables.css")
   body
     div.container
-      +headerJa("variables")
+      +header-ja("variables")
+      +navigation
         p.lead Sass変数の操作
 
       h2#sass-variables Sass変数
@@ -124,8 +129,12 @@ html(lang="en")
         | または
         code map-remove($map, $keys...)
         | を検索すればその付近に説明がある)。
-      p.my-2 またBootstrapのインポートは全体丸ごとではなくパーシャルごとに行う必要がある。コード例が公式ドキュメントの
+      p.mt-2.mb-4 またBootstrapのインポートは全体丸ごとではなくパーシャルごとに行う必要がある。コード例が公式ドキュメントの
         +link("http://getbootstrap.com/docs/4.1/getting-started/theming/#remove-from-map") Remove from map
         | にあるので参照すること。
 
-      +breadcrumb1("ホーム", "Sass変数の操作")
+      +navigation
+      +breadcrumb-1("ホーム", "Sass変数の操作")
+
+    +script-jquery
+    +script-js

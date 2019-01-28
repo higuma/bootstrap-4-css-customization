@@ -1,23 +1,143 @@
-<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><title>Bootstrap 4 customization: カスタマイズの方法</title><link rel="stylesheet" href="../css/howto.css"></head><body><div class="container"><div class="row"><div class="col-auto mr-auto"><h1 class="display-4 mb-0">Bootstrap 4 CSS customization</h1><p class="lead">カスタマイズの方法</p></div><div class="col-auto"><a href="https://github.com/higuma/bootstrap-4-css-customization" target="_blank"><img class="mr-2 my-3" src="../img/GitHub-Mark-32px.png"/></a> ja | <a href="../en/howto.html">en</a></div></div><h2 id="overview">カスタマイズの手順</h2><p class="my-2">Bootstrap 4 CSSのソースコードは<a href="https://sass-lang.com/" target="_blank">Sass</a>で書かれている。一般なカスタマイズ手順は次の通り。Bootstrapのライブラリーコードに手を加える必要はなく、拡張用のSassファイルを作りそこへ記述する。</p><ol><li>拡張用Sassファイルを作成<ol><li>カスタマイズ用変数を定義して値を設定</li><li>Bootstrap Sassコードをインポート</li><li>(オプション) 必要に応じて追加スタイルを記述</li></ol></li><li>SassファイルをCSSへコンパイル</li><li>Autoprefixerでベンダープリフィクスを追加</li><li>(オプション) CSS圧縮ツールで最適化</li></ol><h2 class="mt-4" id="tools">必要なツール</h2><p class="my-2">Bootstrap Sassのカスタマイズには2種類(オプションで3種類)のツールが必要。また作業の効率化のため一般的にビルドツールも用いる。</p><h4 class="mt-3" id="sass">Sass</h4><p class="my-2">Sassの公式実装は<a href="https://sass-lang.com/ruby-sass" target="_blank">Ruby Sass</a> (オリジナル)、<a href="https://sass-lang.com/libsass" target="_blank">libsass</a> (C++)と<a href="https://sass-lang.com/dart-sass" target="_blank">Dart Sass</a> (最近リリースされたばかり)の3種類がある。Ruby Sassとlibsassがポピュラーだが、後発のlibsassの方が高速なので最近はlibsassがよく用いられる。このチュートリアルではlibsassの<a href="https://nodejs.org/" target="_blank">node.js</a>用インターフェースである<a href="https://github.com/sass/node-sass" target="_blank">node-sass</a>を用いている。</p><h4 class="mt-3" id="mt-4autoprefixer">Autoprefixer</h4><p class="my-2">Bootstrap 4 CSSのSassソースコードは(一部を除き)ベンダープリフィクスを意図的に書かないコーディングスタイルで書かれており、ベンダープリフィクス処理を<a href="https://github.com/postcss/autoprefixer" target="_blank">Autoprefixer</a>に任せることで対応している。Autoprefixerは<a href="https://github.com/postcss/postcss" target="_blank">PostCSS</a>のプラグインで、<a href="https://nodejs.org/" target="_blank">node.js</a>上で動作する(互換ツールなし)。</p><p class="my-2">Autoprefixerdではサポートするブラウザの条件を<code>package.json</code>に<a href="https://github.com/browserslist/browserslist" target="_blank">browserslist</a>の形式で記述する(書式は<a href="https://github.com/browserslist/browserslist#best-practices" target="_blank">Best Practices</a>と<a href="https://github.com/browserslist/browserslist#full-list" target="_blank">Full List</a>を参照)。本チュートリアルは<a href="https://github.com/twbs/bootstrap/tree/v4.1.1" target="_blank">Bootstrap 4.1.1</a>のソースコードを用いており、その<a href="https://github.com/twbs/bootstrap/blob/v4.1.1/package.json" target="_blank"><code class="text-danger">package.json</code></a>から設定を引用している(下記参照)。この情報をAutoprefixerが参照し、各CSSプロパティに対してベンダープリフィクスの追加や除去を行う。</p><div><code>package.json</code> (一部)</div><pre class="p-2 border bg-light"><code>&quot;browserslist&quot;: [
-  &quot;last 1 major version&quot;,
-  &quot;&gt;= 1%&quot;,
-  &quot;Chrome &gt;= 45&quot;,
-  &quot;Firefox &gt;= 38&quot;,
-  &quot;Edge &gt;= 12&quot;,
-  &quot;Explorer &gt;= 10&quot;,
-  &quot;iOS &gt;= 9&quot;,
-  &quot;Safari &gt;= 9&quot;,
-  &quot;Android &gt;= 4.4&quot;,
-  &quot;Opera &gt;= 30&quot;
-]</code></pre><h4 class="mt-3" id="mt-4minifier">(オプション) CSS圧縮ツール</h4><p class="my-2">CSS圧縮ツールでサイズ圧縮を行うのは一般的なサイト最適化方法のひとつでツールも数多い。本チュートリアルは開発環境に<a href="https://www.nodejs.com/" target="_blank">node.js</a>を用いているが、node用CSS圧縮ツールも多数ある。</p><ul><li><a href="https://github.com/jakubpawlowicz/clean-css" target="_blank">clean-css</a> - スタンドアロンツール、Bootstrapがライブラリビルドに使用している</li><li>PostCSSプラグイン<ul><li><a href="https://github.com/hail2u/node-csswring" target="_blank">csswring</a> - 本チュートリアルで使用(扱いが簡単)</li><li><a href="https://github.com/ben-eb/cssnano" target="_blank">cssnano</a> - 有名で高機能、ただしやや難しい(正しく使わないと副作用あり)</li></ul></li></ul><h4 class="mt-3" id="build-tool">ビルドツール</h4><p class="my-2">作業の効率化には何らかのビルドツールが必要だが好みのツールでよい(GNU makeやApache Ant等も可)。本チュートリアルは開発環境にnode.jsを用いているが(理由はAutoprefixerがnode.js専用で代替ツールがないため)、node.js用ビルドツール(タスクランナー)には有名なものが多数ある(WebPack, Gulp, Grunt等)。</p><p class="my-2">本チュートリアルではビルドツールに<a href="https://npmjs.com/" target="_blank">npm</a>を用いている。npmは本来node.js用パッケージマネージャだが簡単なビルドツールにもなる。操作は<code>npm run[-script]</code>コマンド(<a href="https://docs.npmjs.com/cli/run-script" target="_blank">リファレンス</a>参照)で行い、全コマンドは<a href="https://github.com/higuma/bootstrap-4-css-customization/blob/master/package.json" target="_blank">package.json</a>中の<code>"scripts:"</code>フィールドに記述してある。</p><h2 class="mt-4" id="bootstrap-sass">Bootstrap Sassソースコード</h2><p class="my-2">Bootstrap Sassソースコードは<code>.scss</code>ファイル群で構成されており、ファイルはその用途により2種類に分けられる。</p><ul><li>プリコンパイル版コード生成用 - <code>bootstrap.scss</code>, <code>bootstrap.grid.scss</code>, <code>bootstrap.reboot.scss</code> の3つ</li><li><a href="https://sass-lang.com/documentation/file.SASS_REFERENCE.html#partials" target="_blank">パーシャル</a> - モジュールファイル(ファイル名がアンダースコアで始まるもの、例: <code>_variables.scss</code>)</li></ul><p class="my-2">これらのソースファイルを利用するには<a href="https://sass-lang.com/documentation/file.SASS_REFERENCE.html#import" target="_blank"><code>@import</code></a>文を用いる。Bootstrapの全機能をインポートする場合は<code>@import "{path}/bootstrap";</code>とする。パーシャルの場合も同様で、<code>@import "{path}/variables";</code> (例: <code>_variables.scss</code>をインポートする場合)のように記述する。先頭のアンダースコアは省略してよい(通常書かない)。</p><h2 class="mt-4" id="customizing">Bootstrapのカスタマイズ</h2><p class="my-2">Bootstrapには500以上のカスタマイズ可能な<a href="https://sass-lang.com/documentation/file.SASS_REFERENCE.html#variables_" target="_blank">Sass変数</a> (先頭文字は<code>$</code>)があり、これらの変数は全て<code>_variable.scss</code>の中で<a href="https://sass-lang.com/documentation/file.SASS_REFERENCE.html#variable_defaults_default" target="_blank">デフォルト値付き書式</a> <code>!default</code> を用いて定義されている。</p><div><code>_variable.scss</code> (一部)</div><pre class="p-2 border bg-light"><code>$white:    #fff !default;
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Bootstrap 4 customization: カスタマイズの方法</title>
+    <link rel="stylesheet" href="../css/howto.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-auto mr-auto">
+          <h1 class="display-4 mb-0">Bootstrap 4 CSS customization</h1>
+        </div>
+        <div class="col-auto"><a href="https://github.com/higuma/bootstrap-4-css-customization" target="_blank"><img class="mr-2 my-3" src="../img/GitHub-Mark-32px.png"/></a> ja | <a href="../en/howto.html">en</a>
+        </div>
+      </div>
+      <div class="row my-2">
+        <div class="col"><a href="index.html">ホーム</a> ⇐</div>
+        <div class="col text-center">
+          <p class="lead">カスタマイズの方法</p>
+        </div>
+        <div class="col text-right">⇒ <a href="partials.html">Sassパーシャルのインポート</a></div>
+      </div>
+      <h2 id="overview">カスタマイズの手順</h2>
+      <p class="my-2">Bootstrap 4 CSSのソースコードは<a href="https://sass-lang.com/" target="_blank">Sass</a>で書かれている。一般なカスタマイズ手順は次の通り。Bootstrapのライブラリーコードに手を加える必要はなく、拡張用のSassファイルを作りそこへ記述する。
+      </p>
+      <ol>
+        <li>拡張用Sassファイルを作成
+          <ol>
+            <li>カスタマイズ用変数を定義して値を設定</li>
+            <li>Bootstrap Sassコードをインポート</li>
+            <li>(オプション) 必要に応じて追加スタイルを記述</li>
+          </ol>
+        </li>
+        <li>SassファイルをCSSへコンパイル</li>
+        <li>Autoprefixerでベンダープリフィクスを追加</li>
+        <li>(オプション) CSS圧縮ツールで最適化</li>
+      </ol>
+      <h2 class="mt-4" id="tools">必要なツール</h2>
+      <p class="my-2">Bootstrap Sassのカスタマイズには2種類(オプションで3種類)のツールが必要。また作業の効率化のため一般的にビルドツールも用いる。</p>
+      <h4 class="mt-3" id="sass">Sass</h4>
+      <p class="my-2">Sassの公式実装は<a href="https://sass-lang.com/ruby-sass" target="_blank">Ruby Sass</a> (オリジナル)、<a href="https://sass-lang.com/libsass" target="_blank">libsass</a> (C++)と<a href="https://sass-lang.com/dart-sass" target="_blank">Dart Sass</a> (最近リリースされたばかり)の3種類がある。Ruby Sassとlibsassがポピュラーだが、後発のlibsassの方が高速なので最近はlibsassがよく用いられる。このチュートリアルではlibsassの<a href="https://nodejs.org/" target="_blank">node.js</a>用インターフェースである<a href="https://github.com/sass/node-sass" target="_blank">node-sass</a>を用いている。
+      </p>
+      <h4 class="mt-3" id="mt-4autoprefixer">Autoprefixer</h4>
+      <p class="my-2">Bootstrap 4 CSSのSassソースコードは(一部を除き)ベンダープリフィクスを意図的に書かないコーディングスタイルで書かれており、ベンダープリフィクス処理を<a href="https://github.com/postcss/autoprefixer" target="_blank">Autoprefixer</a>に任せることで対応している。Autoprefixerは<a href="https://github.com/postcss/postcss" target="_blank">PostCSS</a>のプラグインで、<a href="https://nodejs.org/" target="_blank">node.js</a>上で動作する(互換ツールなし)。
+      </p>
+      <p class="my-2">Autoprefixerdではサポートするブラウザの条件を<code>package.json</code>に<a href="https://github.com/browserslist/browserslist" target="_blank">browserslist</a>の形式で記述する(書式は<a href="https://github.com/browserslist/browserslist#best-practices" target="_blank">Best Practices</a>と<a href="https://github.com/browserslist/browserslist#full-list" target="_blank">Full List</a>を参照)。本チュートリアルは<a href="https://github.com/twbs/bootstrap/tree/v4.2.1" target="_blank">Bootstrap 4.2.1</a>のソースコードを用いており、<a href="https://github.com/twbs/bootstrap/blob/v4.2.1/.browserslistrc" target="_blank"><code class="text-danger">.browserslistrc</code></a>から設定を引用している(下記参照)。この情報をAutoprefixerが参照し、各CSSプロパティに対してベンダープリフィクスの追加や除去を行う。
+      </p>
+      <div><code>.browserslistrc</code></div>
+      <pre class="p-2 border bg-light"><code># https://github.com/browserslist/browserslist#readme
+
+&gt;= 1%
+last 1 major version
+not dead
+Chrome &gt;= 45
+Firefox &gt;= 38
+Edge &gt;= 12
+Explorer &gt;= 10
+iOS &gt;= 9
+Safari &gt;= 9
+Android &gt;= 4.4
+Opera &gt;= 30
+</code></pre>
+      <h4 class="mt-3" id="mt-4minifier">(オプション) CSS圧縮ツール</h4>
+      <p class="my-2">CSS圧縮ツールでサイズ圧縮を行うのは一般的なサイト最適化方法のひとつでツールも数多い。ここでは本チュートリアルが開発環境に用いている<a href="https://www.nodejs.com/" target="_blank">node.js</a>用の主要CSS圧縮ツールのみ示す。
+      </p>
+      <ul>
+        <li><a href="https://github.com/jakubpawlowicz/clean-css" target="_blank">clean-css</a> - スタンドアロンツール、Bootstrapがライブラリビルドに使用している
+        </li>
+        <li>PostCSSプラグイン
+          <ul>
+            <li><a href="https://github.com/hail2u/node-csswring" target="_blank">csswring</a> - 本チュートリアルのビルドにまぎあれこ使用(扱いが簡単)
+            </li>
+            <li><a href="https://github.com/ben-eb/cssnano" target="_blank">cssnano</a> - 有名で高機能、ただしやや難しい(正しく使わないと副作用あり)
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <h4 class="mt-3" id="build-tool">ビルドツール</h4>
+      <p class="my-2">作業の効率化には何らかのビルドツールが必要だが好みのツールでよい(GNU makeやApache Ant等も可)。本チュートリアルは開発環境にnode.jsを用いているが(理由はAutoprefixerがnode.js専用で代替ツールがないため)、node.js用ビルドツール(タスクランナー)には有名なものが多数ある(WebPack, Gulp, Grunt等)。</p>
+      <h5 class="mt-3" id="building-tutorial">チュートリアルのビルド</h5>
+      <p class="my-2"><a href="https://npmjs.com/" target="_blank">npm</a>は本来はnode.js用パッケージマネージャだが簡単なビルドツールとしても利用できる。本チュートリアルはビルドツールにnpmを用いており、次の手順で実際にビルドできる。
+      </p>
+      <ol>
+        <li>GitHubから<a href="https://github.com/higuma/bootstrap-4-css-customization/archive/master.zip" target="_blank">ソース</a>をダウンロードして解凍
+        </li>
+        <li><code>npm install</code> で初期設定(インストール)</li>
+        <li><code>npm run build</code> でビルド実行 (<code>./site/*</code> にファイルを生成)</li>
+        <li><code>npm run start</code> でローカルサーバ起動 (<code>http://localhost:8888/</code>)</li>
+      </ol>
+      <p class="my-2">その他の開発用コマンドは<a href="https://github.com/higuma/bootstrap-4-css-customization/blob/master/package.json" target="_blank">package.json</a>中の<code>"scripts:"</code>フィールドを参照。ここにコマンドを登録して、<code>npm run[-script]</code> (⇒ <a href="https://docs.npmjs.com/cli/run-script" target="_blank">リファレンス</a>)を用いて実行している。
+      </p>
+      <h2 class="mt-4" id="bootstrap-sass">Bootstrap Sassソースコード</h2>
+      <p class="my-2">Bootstrap Sassソースコードは<code>.scss</code>ファイル群で構成されており、ファイルはその用途により2種類に分けられる。</p>
+      <ul>
+        <li>プリコンパイル版コード生成用 - <code>bootstrap.scss</code>, <code>bootstrap.grid.scss</code>, <code>bootstrap.reboot.scss</code> の3つ</li>
+        <li><a href="https://sass-lang.com/documentation/file.SASS_REFERENCE.html#partials" target="_blank">パーシャル</a> - モジュールファイル(ファイル名がアンダースコアで始まるもの、例: <code>_variables.scss</code>)
+        </li>
+      </ul>
+      <p class="my-2">これらのソースファイルを利用するには<a href="https://sass-lang.com/documentation/file.SASS_REFERENCE.html#import" target="_blank"><code>@import</code></a>文を用いる。Bootstrapの全機能をインポートする場合は<code>@import "{path}/bootstrap";</code>とする。パーシャルの場合も同様で、<code>@import "{path}/variables";</code> (例: <code>_variables.scss</code>をインポートする場合)のように記述する。先頭のアンダースコアは省略してよい(通常書かない)。
+      </p>
+      <h2 class="mt-4" id="customizing">Bootstrapのカスタマイズ</h2>
+      <p class="my-2">Bootstrapには500以上のカスタマイズ可能な<a href="https://sass-lang.com/documentation/file.SASS_REFERENCE.html#variables_" target="_blank">Sass変数</a> (先頭文字は<code>$</code>)があり、これらの変数は全て<code>_variable.scss</code>の中で<a href="https://sass-lang.com/documentation/file.SASS_REFERENCE.html#variable_defaults_default" target="_blank">デフォルト値付き書式</a> <code>!default</code> を用いて定義されている。
+      </p>
+      <div><code>_variable.scss</code> (一部)</div>
+      <pre class="p-2 border bg-light"><code>$white:    #fff !default;
 $gray-100: #f8f9fa !default;
 $gray-200: #e9ecef !default;
 ...
 $body-bg:                   $white !default;
 $body-color:                $gray-900 !default;
-...</code></pre><p class="my-2">Bootstrapのカスタマイズは基本的にこれらの変数を変更することによって行う。まず最初に自分で値を指定して目的の変数を定義し、その後でBootstrapをインポートすればよい。例えばページの基本色設定を変更するには次のようにすればよい。</p><pre class="p-2 border bg-light"><code>// 先に変数を定義しておく(!defaultの値より優先する)
+...</code></pre>
+      <p class="my-2">Bootstrapのカスタマイズは基本的にこれらの変数を変更することによって行う。まず最初に自分で値を指定して目的の変数を定義し、その後でBootstrapをインポートすればよい。例えばページの基本色設定を変更するには次のようにすればよい。</p>
+      <pre class="p-2 border bg-light"><code>// 先に変数を定義しておく(!defaultの値より優先する)
 $body-bg: ivory;        // または #fffff0;
 $body-color: navy;      // または #000080;
 
 // Bootstrapを全体丸ごとインポート
-@import &quot;bootstrap/scss/bootstrap&quot;;</code></pre><p class="my-2">より細かくパーシャル単位でソースをインポートする方法もある。詳しくは<a href="partials.html">Sassパーシャルのインポート</a>を参照。</p><nav class="mt-4 mb-5" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="index.html">ホーム</a></li><li class="breadcrumb-item active" aria-current="page">カスタマイズの方法</li></ol></nav></div></body></html>
+@import &quot;bootstrap/scss/bootstrap&quot;;</code></pre>
+      <p class="mt-2 mb-4">より細かくパーシャル単位でソースをインポートする方法もある。詳しくは<a href="partials.html">Sassパーシャルのインポート</a>を参照。</p>
+      <div class="row my-2">
+        <div class="col"><a href="index.html">ホーム</a> ⇐</div>
+        <div class="col text-center">
+        </div>
+        <div class="col text-right">⇒ <a href="partials.html">Sassパーシャルのインポート</a></div>
+      </div>
+      <nav class="mt-2 mb-5" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">ホーム</a></li>
+          <li class="breadcrumb-item active" aria-current="page">カスタマイズの方法</li>
+        </ol>
+      </nav>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script>
+      // Add self links to headings
+      $('h2[id],h3[id],h4[id],h5[id],h6[id]').append(function() {
+        return '<a class="heading-link" href="#' + this.id + '">#</a>';
+      });
+    </script>
+  </body>
+</html>

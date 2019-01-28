@@ -5,6 +5,9 @@ $enable-shadows: true;
 // import Bootstrap
 @import "bootstrap/scss/bootstrap";
 
+// common styles
+@import "common-styles";
+
 // unset customization variables for comparizon
 $enable-gradients: false;
 $enable-shadows: false;

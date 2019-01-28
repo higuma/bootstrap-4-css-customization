@@ -1,4 +1,52 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><title>Bootstrap 4 customization: Importing Sass partials</title><link rel="stylesheet" href="../css/partials.css"></head><body><div class="container"><div class="row"><div class="col-auto mr-auto"><h1 class="display-4 mb-0">Bootstrap 4 CSS customization</h1><p class="lead">Importing Sass partials</p></div><div class="col-auto"><a href="https://github.com/higuma/bootstrap-4-css-customization/" target="_blank"><img class="mr-2 my-3" src="../img/GitHub-Mark-32px.png"/></a> en | <a href="../ja/partials.html">ja</a></div></div><h2 id="partials"><a href="https://sass-lang.com/documentation/file.SASS_REFERENCE.html#partials" target="_blank">Partials</a></h2><Partials></Partials><p class="my-2">Bootstrap Sass source code is made of multiple <code>.scss</code> source files (see <a href="https://github.com/twbs/bootstrap/tree/v4.1.1/scss" target="_blank">GitHub repo</a>). They are classified into two types by purpose.</p><ul><li>Library target sources <ul><li><code>bootstrap.scss</code></li><li><code>bootstrap.grid.scss</code></li><li><code>bootstrap.reboot.scss</code></li></ul></li><li><a href="https://sass-lang.com/documentation/file.SASS_REFERENCE.html#partials" target="_blank">Partials</a> - all others<ul><li>Begins with underscore (e.g. <code>_functions.scss</code>)</li><li>Module files for library targets and/or other modules</li></ul></li></ul><p class="my-2">You can use <a href="https://sass-lang.com/documentation/file.SASS_REFERENCE.html#import" target="_blank"><code>@import</code></a> statement to use partials. You do not have to type underscores. But you ought to read source files and analize partial dependencies.</p><p class="my-2">This page uses only limited features of Bootstrap styles. We can import just required Sass partials to optimize CSS (see below). Size is reduced from 138k to 34k (for Bootstrap 4.1.1).</p><div><code>partials.scss</code></div><pre class="p-2 mb-4 border bg-light"><code>// import required partials
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Bootstrap 4 customization: Importing Sass partials</title>
+    <link rel="stylesheet" href="../css/partials.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-auto mr-auto">
+          <h1 class="display-4 mb-0">Bootstrap 4 CSS customization</h1>
+        </div>
+        <div class="col-auto"><a href="https://github.com/higuma/bootstrap-4-css-customization/" target="_blank"><img class="mr-2 my-3" src="../img/GitHub-Mark-32px.png"/></a> en | <a href="../ja/partials.html">ja</a>
+        </div>
+      </div>
+      <div class="row my-2">
+        <div class="col"><a href="howto.html">How to customize</a> ⇐</div>
+        <div class="col text-center">
+          <p class="lead">Importing Sass partials</p>
+        </div>
+        <div class="col text-right">⇒ <a href="variables.html">Manupulating variables</a></div>
+      </div>
+      <h2 id="partials"><a href="https://sass-lang.com/documentation/file.SASS_REFERENCE.html#partials" target="_blank">Partials</a>
+      </h2>
+      <Partials></Partials>
+      <p class="my-2">Bootstrap Sass source code is made of multiple <code>.scss</code> source files (see <a href="https://github.com/twbs/bootstrap/tree/v4.1.1/scss" target="_blank">GitHub repo</a>). They are classified into two types by purpose.
+      </p>
+      <ul>
+        <li>Library target sources 
+          <ul>
+            <li><code>bootstrap.scss</code></li>
+            <li><code>bootstrap.grid.scss</code></li>
+            <li><code>bootstrap.reboot.scss</code></li>
+          </ul>
+        </li>
+        <li><a href="https://sass-lang.com/documentation/file.SASS_REFERENCE.html#partials" target="_blank">Partials</a> - all others
+          <ul>
+            <li>Begins with underscore (e.g. <code>_functions.scss</code>)</li>
+            <li>Module files for library targets and/or other modules</li>
+          </ul>
+        </li>
+      </ul>
+      <p class="my-2">You can use <a href="https://sass-lang.com/documentation/file.SASS_REFERENCE.html#import" target="_blank"><code>@import</code></a> statement to use partials. You do not have to type underscores. But you ought to read source files and analize partial dependencies.
+      </p>
+      <p class="my-2">This page uses only limited features of Bootstrap styles. We can import just required Sass partials to optimize CSS (see below). Size is reduced from 150k to 42k (for Bootstrap 4.2.1).</p>
+      <div><code>partials.scss</code></div>
+      <pre class="p-2 mb-4 border bg-light"><code>// import required partials
 @import &quot;bootstrap/scss/functions&quot;;
 @import &quot;bootstrap/scss/variables&quot;;
 @import &quot;bootstrap/scss/mixins&quot;;
@@ -13,4 +61,26 @@
 @import &quot;bootstrap/scss/utilities/background&quot;;
 @import &quot;bootstrap/scss/utilities/borders&quot;;
 @import &quot;bootstrap/scss/utilities/spacing&quot;;
-</code></pre><nav class="mt-4 mb-5" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="index.html">Home</a></li><li class="breadcrumb-item active" aria-current="page">Importing Sass partials</li></ol></nav></div></body></html>
+</code></pre>
+      <div class="row my-2">
+        <div class="col"><a href="howto.html">How to customize</a> ⇐</div>
+        <div class="col text-center">
+        </div>
+        <div class="col text-right">⇒ <a href="variables.html">Manupulating variables</a></div>
+      </div>
+      <nav class="mt-2 mb-5" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Importing Sass partials</li>
+        </ol>
+      </nav>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script>
+      // Add self links to headings
+      $('h2[id],h3[id],h4[id],h5[id],h6[id]').append(function() {
+        return '<a class="heading-link" href="#' + this.id + '">#</a>';
+      });
+    </script>
+  </body>
+</html>

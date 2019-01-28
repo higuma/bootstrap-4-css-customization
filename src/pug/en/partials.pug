@@ -1,5 +1,9 @@
 include ../pug-mixins
 
+mixin navigation
+  +nav-mid("How to customize", "howto.html", "Manupulating variables", "variables.html")
+    block
+
 doctype
 html(lang="en")
   head
@@ -9,7 +13,8 @@ html(lang="en")
     link(rel="stylesheet" href="../css/partials.css")
   body
     div.container
-      +headerEn("partials")
+      +header-en("partials")
+      +navigation
         p.lead Importing Sass partials
       h2#partials
         +link("https://sass-lang.com/documentation/file.SASS_REFERENCE.html#partials") Partials
@@ -37,7 +42,7 @@ html(lang="en")
         +link("https://sass-lang.com/documentation/file.SASS_REFERENCE.html#import")
           code @import
         |  statement to use partials. You do not have to type underscores. But you ought to read source files and analize partial dependencies.
-      p.my-2 This page uses only limited features of Bootstrap styles. We can import just required Sass partials to optimize CSS (see below). Size is reduced from 138k to 34k (for Bootstrap 4.1.1).
+      p.my-2 This page uses only limited features of Bootstrap styles. We can import just required Sass partials to optimize CSS (see below). Size is reduced from 150k to 42k (for Bootstrap 4.2.1).
       div: code partials.scss
       pre.p-2.mb-4.border.bg-light
         code
@@ -57,4 +62,8 @@ html(lang="en")
           = `@import "bootstrap/scss/utilities/borders";\n`
           = `@import "bootstrap/scss/utilities/spacing";\n`
 
-      +breadcrumb1("Home", "Importing Sass partials")
+      +navigation
+      +breadcrumb-1("Home", "Importing Sass partials")
+
+    +script-jquery
+    +script-js

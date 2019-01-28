@@ -1,5 +1,9 @@
 include ../pug-mixins
 
+mixin navigation
+  +nav-mid("Home", "index.html", "Importing Sass partials", "partials.html")
+    block
+
 doctype
 html(lang="en")
   head
@@ -9,7 +13,8 @@ html(lang="en")
     link(rel="stylesheet" href="../css/howto.css")
   body
     div.container
-      +headerEn("howto")
+      +header-en("howto")
+      +navigation
         p.lead How to customize
 
       h2#overview Overview
@@ -56,24 +61,25 @@ html(lang="en")
         +link("https://github.com/browserslist/browserslist#best-practices") Best Practices
         |  and 
         +link("https://github.com/browserslist/browserslist#full-list") Full List
-        |  for query syntax). This tutorial uses exactly the same settings as Bootstrap 4.1.1 as follows. It is referenced by Autoprefixer to add or remove vender prefixes for each CSS property.
+        |  for query syntax). This tutorial borrows the same settings as Bootstrap 4.2 as below. It is referenced by Autoprefixer to add or remove vender prefixes for each CSS property.
       div
-        code package.json
-        |  (excerpts)
+        code .browserslistrc
       pre.p-2.border.bg-light
         code
-          = `"browserslist": [\n`
-          = `  "last 1 major version",\n`
-          = `  ">= 1%",\n`
-          = `  "Chrome >= 45",\n`
-          = `  "Firefox >= 38",\n`
-          = `  "Edge >= 12",\n`
-          = `  "Explorer >= 10",\n`
-          = `  "iOS >= 9",\n`
-          = `  "Safari >= 9",\n`
-          = `  "Android >= 4.4",\n`
-          = `  "Opera >= 30"\n`
-          = `]`
+          = `# https://github.com/browserslist/browserslist#readme\n`
+          = `\n`
+          = `>= 1%\n`
+          = `last 1 major version\n`
+          = `not dead\n`
+          = `Chrome >= 45\n`
+          = `Firefox >= 38\n`
+          = `Edge >= 12\n`
+          = `Explorer >= 10\n`
+          = `iOS >= 9\n`
+          = `Safari >= 9\n`
+          = `Android >= 4.4\n`
+          = `Opera >= 30\n`
+
       h4.mt-3#mt-4minifier (Optional) CSS minifier
       p.my-2 You can optimize CSS output with a CSS minifier. There are a lot of CSS minifiers for various environments (you can use anything you like). This tutorial uses 
         +link("https://www.nodejs.com/") node.js
@@ -92,18 +98,35 @@ html(lang="en")
               |  - high spec and popular, but slightly difficult and complex
       h4.mt-3#build-tool Build tool
       p.my-2 You may also need a build tool. You can use anything you prefer (like GNU make). This tutorial recommends node.js-based tools as Autoprefixer (runs only on node.js) is required. There are numbers of build (task runner) tools on node.js (like Webpack, Gulp, Grunt, etc.).
+      h5.mt-3#building-tutorial Building this tutorial
       p.my-2 This tutorial uses 
         +link("https://npmjs.com/") npm
-        |  CLI for simplicity. Npm is mostly a package manager for node.js but also a tiny task runner. All build operations are made with 
-        code npm run[-script]
-        |  commands (see 
-        +link("https://docs.npmjs.com/cli/run-script") reference
-        | ). Commands are written in 
+        |  CLI for simplicity. Npm is mainly a package manager for node.js but also can be a tiny task runner. You can build this tutorial by yourself as the following instruction.
+      ol
+        li Download 
+          +link("https://github.com/higuma/bootstrap-4-css-customization/archive/master.zip") zipped source code 
+          |  from GitHub
+        li Install required tools with 
+          code npm install
+        li Build the site contents with 
+          code npm run build
+          |  (files are generated to 
+          code ./site/*
+          | )
+        li Start the development server with 
+          code npm run start
+          |  (hosted to 
+          code http://localhost:8888/
+          | )
+      p.my-2 See 
         code "scripts:"
-        |  field of 
+        |  field entries of 
         +link("https://github.com/higuma/bootstrap-4-css-customization/blob/master/package.json") package.json
-        | .
-
+        |  for more commands. These commands are executed with 
+        code npm run[-script]
+        |  (⇒ 
+        +link("https://docs.npmjs.com/cli/run-script") Reference
+        | ).
       h2.mt-4#bootstrap-sass Bootstrap Sass code
       p.my-2 Bootstrap Sass source code consists of multiple 
         code .scss
@@ -164,8 +187,12 @@ html(lang="en")
           = `\n`
           = `// Import Bootstrap (whole library)\n`
           = `@import "bootstrap/scss/bootstrap";`
-      p.my-2 You can also customize Bootstrap with importing by partials. See 
+      p.mt-2.mb-4 You can also customize Bootstrap with importing by partials. See 
         a(href="partials.html") Importing Sass partials
         |  for detail.
 
-      +breadcrumb1("Home", "How to customize")
+      +navigation
+      +breadcrumb-1("Home", "How to customize")
+
+    +script-jquery
+    +script-js

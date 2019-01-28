@@ -1,5 +1,9 @@
 include ../pug-mixins
 
+mixin navigation
+  +nav-mid("カスタマイズの方法", "howto.html", "Sass変数の操作", "variables.html")
+    block
+
 doctype
 html(lang="ja")
   head
@@ -9,7 +13,8 @@ html(lang="ja")
     link(rel="stylesheet" href="../css/partials.css")
   body
     div.container
-      +headerJa("partials")
+      +header-ja("partials")
+      +navigation
         p.lead Sassパーシャルのインポート
       h2#partials
         +link("https://sass-lang.com/documentation/file.SASS_REFERENCE.html#partials") パーシャル
@@ -38,7 +43,7 @@ html(lang="ja")
         | 文を用いる。パーシャルは伝統的にファイル名先頭にアンダースコアを用いるが、
         code @import
         | 文ではこれを省略できる(書いてもよいが通常書かない)。
-      p.my-2 本ページはBootstrapの全機能のうちほんの一部しか利用していないので、使用パーシャルを調べてそれらだけインポートすればサイズを削減できる(ただし多少のコード解読と解析が必要)。以下の例(本ページのCSS用)を用いて全機能(138k)に比べて34kにまで削減できる(バージョン4.1.1の場合)。
+      p.my-2 本ページはBootstrapの全機能のうちほんの一部しか利用していないので、使用パーシャルを調べてそれらだけインポートすればサイズを削減できる(ただし多少のコード解読と解析が必要)。以下の例(本ページのCSS用)を用いて全機能(150k)と比較して42kにまで削減できる(バージョン4.2.1の場合)。
       div
         code partials.scss
       pre.p-2.mb-4.border.bg-light
@@ -58,5 +63,10 @@ html(lang="ja")
           = `@import "bootstrap/scss/utilities/background";\n`
           = `@import "bootstrap/scss/utilities/borders";\n`
           = `@import "bootstrap/scss/utilities/spacing";\n`
+          = `@import "bootstrap/scss/utilities/text";\n`
 
-      +breadcrumb1("ホーム", "Sassパーシャルのインポート")
+      +navigation
+      +breadcrumb-1("ホーム", "Sassパーシャルのインポート")
+
+    +script-jquery
+    +script-js

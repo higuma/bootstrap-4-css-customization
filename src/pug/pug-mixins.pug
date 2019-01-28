@@ -2,37 +2,78 @@ mixin link(url)
   a(href=url target="_blank")
     block
 
-mixin headerEn(name)
+mixin header-en(name)
   div.row
     div.col-auto.mr-auto
       h1.display-4.mb-0 Bootstrap 4 CSS customization
-      block
     div.col-auto
       +link("https://github.com/higuma/bootstrap-4-css-customization/")
         img.mr-2.my-3(src="../img/GitHub-Mark-32px.png")
       |  en | 
       a(href=`../ja/${name}.html`) ja
 
-mixin headerJa(name)
+mixin header-ja(name)
   div.row
     div.col-auto.mr-auto
       h1.display-4.mb-0 Bootstrap 4 CSS customization
-      block
     div.col-auto
       +link("https://github.com/higuma/bootstrap-4-css-customization")
         img.mr-2.my-3(src="../img/GitHub-Mark-32px.png")
       |  ja | 
       a(href=`../en/${name}.html`) en
 
+mixin nav-top(next, nextUrl)
+  div.row.my-2
+    div.col
+    div.col.text-center
+      block
+    div.col.text-right ⇒ 
+      a(href=nextUrl)= next
 
-mixin breadcrumb0(home)
-  nav.mt-4.mb-5(aria-label="breadcrumb")
+mixin nav-mid(prev, prevUrl, next, nextUrl)
+  div.row.my-2
+    div.col
+      a(href=prevUrl)= prev
+      |  ⇐
+    div.col.text-center
+      block
+    div.col.text-right
+      | ⇒ 
+      a(href=nextUrl)= next
+
+mixin nav-end(prev, prevUrl)
+  div.row.my-2
+    div.col
+      a(href=prevUrl)= prev
+      |  ⇐
+    div.col.text-center
+      block
+    div.col
+
+mixin breadcrumb-0(home)
+  nav.mt-2.mb-5(aria-label="breadcrumb")
     ol.breadcrumb
       li.breadcrumb-item.active(aria-current="page")= home
 
-mixin breadcrumb1(home, current)
-  nav.mt-4.mb-5(aria-label="breadcrumb")
+mixin breadcrumb-1(home, current)
+  nav.mt-2.mb-5(aria-label="breadcrumb")
     ol.breadcrumb
       li.breadcrumb-item
         a(href="index.html")= home
       li.breadcrumb-item.active(aria-current="page")= current
+
+mixin script-jquery
+  script(src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous")
+
+mixin script-popper
+  script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous")
+
+mixin script-bootstrap
+  script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous")
+
+mixin script-js
+  script.
+    // Add self links to headings
+    $('h2[id],h3[id],h4[id],h5[id],h6[id]').append(function() {
+      return '<a class="heading-link" href="#' + this.id + '">#</a>';
+    });

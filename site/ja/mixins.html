@@ -1,7 +1,65 @@
-<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><title>Bootstrap 4 customization: Sassミックスインの利用</title><link rel="stylesheet" href="../css/mixins.css"></head><body><div class="container"><div class="row"><div class="col-auto mr-auto"><h1 class="display-4 mb-0">Bootstrap 4 CSS customization</h1><p class="lead">Sassミックスインの利用</p></div><div class="col-auto"><a href="https://github.com/higuma/bootstrap-4-css-customization" target="_blank"><img class="mr-2 my-3" src="../img/GitHub-Mark-32px.png"/></a> ja | <a href="../en/mixins.html">en</a></div></div><h2 id="partials"><a href="https://sass-lang.com/documentation/file.SASS_REFERENCE.html#mixins" target="_blank">ミックスイン</a></h2><p class="my-2">Bootstrap Sassソースコードには60以上の<a href="https://sass-lang.com/documentation/file.SASS_REFERENCE.html#mixins" target="_blank">ミックスイン</a>があり、<code>mixins/</code> サブディレクトリのソースファイルに記述されている(一覧は<a href="https://github.com/twbs/bootstrap/tree/v4.1.1/scss/mixins" target="_blank">GitHubリポジトリ</a>を参照)。これらはBootstrapライブラリの構成部品として用いられているが、これらを利用して新しいスタイルを生成するのに利用することもできる。</p><p class="my-2">(パーシャルのインポートに <code>@import "{パーシャル名}";</code> を用いるのに対し) ミックスインを利用する場合は <a href="https://sass-lang.com/documentation/file.SASS_REFERENCE.html#including_a_mixin" target="_blank"><code class="text-danger">@include "{ミックスイン名}";</code></a> を用いる。</p><p class="my-2">実際の例を示す。Bootstrapが用意しているミックスインの中に<code>resizable($direction)</code>があり、これを追加することで対象要素をサイズ変更可能に設定することができる(<code>mixins/_resize.scss</code>で定義、だが実はBootstrapライブラリのどこにも使われていない)。次のコードはその応用で <code>.resizable</code> という名のカスタムユーティリティクラスを作成している。</p><div><code>mixins.scss</code> (本ページのSassソース)</div><pre class="p-2 mb-4 border bg-light"><code>// 先にBootstrapをインポート
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Bootstrap 4 customization: Sassミックスインの利用</title>
+    <link rel="stylesheet" href="../css/mixins.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-auto mr-auto">
+          <h1 class="display-4 mb-0">Bootstrap 4 CSS customization</h1>
+        </div>
+        <div class="col-auto"><a href="https://github.com/higuma/bootstrap-4-css-customization" target="_blank"><img class="mr-2 my-3" src="../img/GitHub-Mark-32px.png"/></a> ja | <a href="../en/mixins.html">en</a>
+        </div>
+      </div>
+      <div class="row my-2">
+        <div class="col"><a href="variables.html">Sass変数の操作</a> ⇐</div>
+        <div class="col text-center">
+          <p class="lead">Sassミックスインの利用</p>
+        </div>
+        <div class="col text-right">⇒ <a href="gradient+shadow.html">グラデーションとシャドウ</a></div>
+      </div>
+      <h2 id="partials"><a href="https://sass-lang.com/documentation/file.SASS_REFERENCE.html#mixins" target="_blank">ミックスイン</a>
+      </h2>
+      <p class="my-2">Bootstrap Sassソースコードには60以上の<a href="https://sass-lang.com/documentation/file.SASS_REFERENCE.html#mixins" target="_blank">ミックスイン</a>があり、<code>mixins/</code> サブディレクトリのソースファイルに記述されている(一覧は<a href="https://github.com/twbs/bootstrap/tree/v4.1.1/scss/mixins" target="_blank">GitHubリポジトリ</a>を参照)。これらはBootstrapライブラリの構成部品として用いられているが、これらを利用して新しいスタイルを生成するのに利用することもできる。
+      </p>
+      <p class="my-2">(パーシャルのインポートに <code>@import "{パーシャル名}";</code> を用いるのに対し) ミックスインを利用する場合は <a href="https://sass-lang.com/documentation/file.SASS_REFERENCE.html#including_a_mixin" target="_blank"><code class="text-danger">@include "{ミックスイン名}";</code></a> を用いる。
+      </p>
+      <p class="my-2">実際の例を示す。Bootstrapが用意しているミックスインの中に<code>resizable($direction)</code>があり、これを追加することで対象要素をサイズ変更可能に設定することができる(<code>mixins/_resize.scss</code>で定義、だが実はBootstrapライブラリのどこにも使われていない)。次のコードはその応用で <code>.resizable</code> という名のカスタムユーティリティクラスを作成している。</p>
+      <div><code>mixins.scss</code> (本ページのSassソース)</div>
+      <pre class="p-2 mb-4 border bg-light"><code>// 先にBootstrapをインポート
 @import &quot;bootstrap/scss/bootstrap&quot;;
 
 // ユーティリティクラスを作成(縦横ともサイズ変更可能にする)
 .resizable {
   @include resizable(both);
-}</code></pre><p class="my-2"><strong>デモ: </strong>次のアラート <code>div.alert.alert-success.resizable</code> は <code>.resizable</code> ユーティリティクラスの応用例で、縦横ともサイズ変更できる。さらに内部のパラグラフも <code>.resizable</code> でサイズ変更できるようにしてある。</p><div class="alert alert-success resizable"><p class="my-0 resizable bg-light">内側のパラグラフ(ここにも <code>.resizable</code> ユーティリティ使用)。Bootstrap Sassミックスイン<code>resizable($direction)</code> を利用し、縦横ともサイズ変更できるように設定されている。</p></div><nav class="mt-4 mb-5" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="index.html">ホーム</a></li><li class="breadcrumb-item active" aria-current="page">Sassミックスインの利用</li></ol></nav></div></body></html>
+}</code></pre>
+      <p class="my-2"><strong>デモ: </strong>次のアラート <code>div.alert.alert-success.resizable</code> は <code>.resizable</code> ユーティリティクラスの応用例で、縦横ともサイズ変更できる。さらに内部のパラグラフも <code>.resizable</code> でサイズ変更できるようにしてある。</p>
+      <div class="alert alert-success resizable mb-4">
+        <p class="my-0 resizable bg-light">内側のパラグラフ(ここにも <code>.resizable</code> ユーティリティ使用)。Bootstrap Sassミックスイン<code>resizable($direction)</code> を利用し、縦横ともサイズ変更できるように設定されている。</p>
+      </div>
+      <div class="row my-2">
+        <div class="col"><a href="variables.html">Sass変数の操作</a> ⇐</div>
+        <div class="col text-center">
+        </div>
+        <div class="col text-right">⇒ <a href="gradient+shadow.html">グラデーションとシャドウ</a></div>
+      </div>
+      <nav class="mt-2 mb-5" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">ホーム</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Sassミックスインの利用</li>
+        </ol>
+      </nav>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script>
+      // Add self links to headings
+      $('h2[id],h3[id],h4[id],h5[id],h6[id]').append(function() {
+        return '<a class="heading-link" href="#' + this.id + '">#</a>';
+      });
+    </script>
+  </body>
+</html>

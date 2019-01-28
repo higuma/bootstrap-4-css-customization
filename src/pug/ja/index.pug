@@ -1,5 +1,9 @@
 include ../pug-mixins
 
+mixin navigation
+  +nav-top("カスタマイズの方法", "howto.html")
+    block
+
 doctype
 html(lang="ja")
   head
@@ -9,11 +13,13 @@ html(lang="ja")
     link(rel="stylesheet" href="../css/index.css")
   body
     div.container
-      +headerJa("index")
+      +header-ja("index")
+      +navigation
+        p.lead ホーム
       h2.mt-4.mb-3#toc 目次
       ul
         li
-          a(href="#about") 本チュートリアルについて
+          a(href="#about") チュートリアルについて
         li.mb-2
           a(href="#sass") Sassの学習
         li
@@ -26,7 +32,7 @@ html(lang="ja")
           a(href="mixins.html") Sassミックスインの利用
         li
           a(href="gradient+shadow.html") グラデーションとシャドウ
-      h2.mt-4#about 本チュートリアルについて
+      h2.mt-4#about チュートリアルについて
       p.my-2 この短いチュートリアルはBootstrap 4のスタイルをカスタマイズする方法についての解説です。Bootstrap CSSは
         +link("https://sass-lang.com/") Sass
         | で記述されており、拡張コードを書き加えることによりカスタマイズすることができます(通常Bootstrapのライブラリソースコードを書き換える必要はありません)。
@@ -43,7 +49,10 @@ html(lang="ja")
         | 、サイトは
         +link("https://pages.github.com/") GitHub Pages
         | で公開しています。
-
+      h4.mt-3#building ビルドの方法
+      p.my-2 Bootstrap 4をカスタマイズするには開発環境の設定が必要ですが、本チュートリアルはそれ自身が開発環境のデモサンプルにもなっており、実際に環境をセットアップして自分でビルドできます。詳しくは
+        a(href="howto.html#building-tutorial") チュートリアルのビルド
+        | をご覧下さい。
       h2.mt-4#sass Sassの学習
       p.my-2 Bootstrapのカスタマイズには
         +link("https://sass-lang.com/") Sass
@@ -58,7 +67,7 @@ html(lang="ja")
         +link("https://sass-lang.com/dart-sass") Dart
         | の3種類あります。
       p.my-2 Sassの主要な公開ドキュメントは次の通りです。実装はたくさん種類がありますが言語仕様の詳しい解説はRuby版しかありません。ただし基本的な言語仕様に違いはないのでRuby版ドキュメントを読めば理解できます。
-      ul
+      ul.mb-4
         li
           +link("https://sass-lang.com/documentation/file.SASS_REFERENCE.html") Sassリファレンス
           |  (Ruby Sass用、文法と組み込み関数の詳しい解説はここのみ)
@@ -81,4 +90,8 @@ html(lang="ja")
         li
           +link("https://ja.wikipedia.org/wiki/Sass") Wikipedia: Sass
 
-      +breadcrumb0("ホーム")
+      +navigation
+      +breadcrumb-0("ホーム")
+
+    +script-jquery
+    +script-js

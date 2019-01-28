@@ -1,6 +1,9 @@
 // import bootstrap
 @import "bootstrap/scss/bootstrap";
 
+// common styles
+@import "common-styles";
+
 // Add "resizable" utility class
 .resizable {
   @include resizable(both);

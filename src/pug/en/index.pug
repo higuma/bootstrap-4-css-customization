@@ -1,5 +1,9 @@
 include ../pug-mixins
 
+mixin navigation
+  +nav-top("How to customize", "howto.html")
+    block
+
 doctype
 html(lang="en")
   head
@@ -9,7 +13,9 @@ html(lang="en")
     link(rel="stylesheet" href="../css/index.css")
   body
     div.container
-      +headerEn("index")
+      +header-en("index")
+      +navigation
+        p.lead Home
       h2.mt-4.mb-3#toc Table of contents
       ul
         li
@@ -43,10 +49,13 @@ html(lang="en")
         | . The site is hosted by 
         +link("https://pages.github.com/") GitHub Pages
         | .
-
+      h4.mt-3#building Building this tutorial
+      p.my-2 This tutorial is also a working example of Bootstrap 4 customization and site development. You can download source files and build site contents by yourself. See 
+        a(href="howto.html#building-tutorial") Building this tutorial
+        |  for detail.
       h2.mt-4#sass Learning Sass
       p.my-2 Sass is required to customize Bootstrap. But Bootstrap source code is also good material to study Sass. You can read Bootstrap code and study Sass with referencing Sass documents.
-      p.my-2 Sass was originally coded in Ruby and several implementations have been created for other languages (see 
+      p.my-2 Sass was originally coded in Ruby and several implementations have been ported to other languages (see 
         +link("https://en.wikipedia.org/wiki/Sass_(stylesheet_language)") Wikipedia
         | ). Three official implementations exist (
         +link("https://sass-lang.com/ruby-sass") Ruby
@@ -56,7 +65,7 @@ html(lang="en")
         +link("https://sass-lang.com/dart-sass") Dart
         | ).
       p.my-2 The following are selected documents for studying Sass. It is imcomplete but propably enough for you.
-      ul
+      ul.mb-4
         li
           +link("https://sass-lang.com/documentation/file.SASS_REFERENCE.html") Sass reference
           |  (for Ruby-Sass)
@@ -79,4 +88,8 @@ html(lang="en")
         li
           +link("https://en.wikipedia.org/wiki/Sass_(stylesheet_language)") Wikipedia: Sass (Stylesheet language)
 
-      +breadcrumb0("Home")
+      +navigation
+      +breadcrumb-0("Home")
+
+    +script-jquery
+    +script-js

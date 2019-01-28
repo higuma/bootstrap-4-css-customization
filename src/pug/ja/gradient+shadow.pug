@@ -2,6 +2,10 @@ include ../pug-mixins
 
 - const themeColors = "primary secondary success danger warning info light dark".split(" ")
 
+mixin navigation
+  +nav-end("Sassミックスインの利用", "mixins.html")
+    block
+
 doctype
 html(lang="ja")
   head
@@ -11,7 +15,8 @@ html(lang="ja")
     link(rel="stylesheet" href="../css/gradient+shadow.css")
   body
     div.container
-      +headerJa("gradient+shadow")
+      +header-ja("gradient+shadow")
+      +navigation
         p.lead グラデーションとシャドウ
 
       h2#overview グラデーションとシャドウの効果確認
@@ -229,19 +234,17 @@ html(lang="ja")
       div.row.mb-2
         each opt in ["なし", "あり"]
           div.col.text-center= `シャドウ${opt}`
-      div.row.mb-5
+      div.row.mb-4
         each opt in [false, true]
           div.col
             div(class=`progress${opt ? "" : " noshadow"}`)
               div.progress-bar.w-25(role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100")
 
-      +breadcrumb1("ホーム", "グラデーションとシャドウ")
+      +navigation
+      +breadcrumb-1("ホーム", "グラデーションとシャドウ")
 
-    // JavaScript (jQuery, Popper.js, Bootstrap)
-    script(src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous")
-    script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous")
-    script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous")
-
+    +script-jquery
+    +script-js
     script.
       // enable popovers
       $('[data-toggle="popover"]').popover();

@@ -1,15 +1,76 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><title>Bootstrap 4 customization: Sass変数の操作</title><link rel="stylesheet" href="../css/variables.css"></head><body><div class="container"><div class="row"><div class="col-auto mr-auto"><h1 class="display-4 mb-0">Bootstrap 4 CSS customization</h1><p class="lead">Sass変数の操作</p></div><div class="col-auto"><a href="https://github.com/higuma/bootstrap-4-css-customization" target="_blank"><img class="mr-2 my-3" src="../img/GitHub-Mark-32px.png"/></a> ja | <a href="../en/variables.html">en</a></div></div><h2 id="sass-variables">Sass変数</h2><p class="my-2">BootstrapソースコードのSass変数は<code>_variables.scss</code>に<code>!default</code>オプション付きで定義されている。これらを操作することによりBootstrapのスタイルをカスタマイズすることができる。</p><h4 class="mt-3" id="basic-parameters">基本パラメータ</h4><p class="my-2">次の変数はスタイル全体に影響する基本パラメータ。</p><ul><li><code>$font-size-base</code> : フォントサイズの基準(デフォルト値 <code>1rem</code>)、全てのフォントサイズに影響を与える</li><li><code>$spacer</code> : <a href="http://getbootstrap.com/docs/4.1/utilities/spacing/" target="_blank">空間ユーティリティ</a>の基準単位(デフォルト値 <code>1rem</code>)</li></ul><pre class="p-2 border bg-light"><code>// 例: 全体的にフォントサイズを1割小さくする
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Bootstrap 4 customization: Sass変数の操作</title>
+    <link rel="stylesheet" href="../css/variables.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-auto mr-auto">
+          <h1 class="display-4 mb-0">Bootstrap 4 CSS customization</h1>
+        </div>
+        <div class="col-auto"><a href="https://github.com/higuma/bootstrap-4-css-customization" target="_blank"><img class="mr-2 my-3" src="../img/GitHub-Mark-32px.png"/></a> ja | <a href="../en/variables.html">en</a>
+        </div>
+      </div>
+      <div class="row my-2">
+        <div class="col"><a href="partials.html">Sassパーシャルのインポート</a> ⇐</div>
+        <div class="col text-center">
+          <p class="lead">Sass変数の操作</p>
+        </div>
+        <div class="col text-right">⇒ <a href="mixins.html">Sassミックスインの利用</a></div>
+      </div>
+      <h2 id="sass-variables">Sass変数</h2>
+      <p class="my-2">BootstrapソースコードのSass変数は<code>_variables.scss</code>に<code>!default</code>オプション付きで定義されている。これらを操作することによりBootstrapのスタイルをカスタマイズすることができる。</p>
+      <h4 class="mt-3" id="basic-parameters">基本パラメータ</h4>
+      <p class="my-2">次の変数はスタイル全体に影響する基本パラメータ。</p>
+      <ul>
+        <li><code>$font-size-base</code> : フォントサイズの基準(デフォルト値 <code>1rem</code>)、全てのフォントサイズに影響を与える</li>
+        <li><code>$spacer</code> : <a href="http://getbootstrap.com/docs/4.1/utilities/spacing/" target="_blank">空間ユーティリティ</a>の基準単位(デフォルト値 <code>1rem</code>)
+        </li>
+      </ul>
+      <pre class="p-2 border bg-light"><code>// 例: 全体的にフォントサイズを1割小さくする
 $font-size-base: 0.9rem;
 
 // Bootstrapをインポート
 @import &quot;bootstrap/scss/bootstrap&quot;;
-</code></pre><h4 class="mt-3" id="changing-customization-presets">カスタマイズ用プリセット変数</h4><p class="my-2">カスタマイズ用のプリセット変数があり、これらは<code>$enable-</code>で始まる名前を持つ。一覧は公式ドキュメントの<a href="https://getbootstrap.com/docs/4.1/getting-started/theming/#sass-options" target="_blank">Sass options</a>を参照。例えばグラデーションとシャドウの効果はデフォルトでは無効(<code>false</code>)に設定されているが(バージョン4.1.1の場合)、次のように有効化できる。</p><div><code>gradient+shadow.scss</code> (先頭部分)</div><pre class="p-2 border bg-light"><code>// カスタマイズ用プリセット変数を設定
+</code></pre>
+      <h4 class="mt-3" id="changing-customization-presets">カスタマイズ用プリセット変数</h4>
+      <p class="my-2">カスタマイズ用のプリセット変数があり、これらは<code>$enable-</code>で始まる名前を持つ。一覧は公式ドキュメントの<a href="https://getbootstrap.com/docs/4.1/getting-started/theming/#sass-options" target="_blank">Sass options</a>を参照。例えばグラデーションとシャドウの効果はデフォルトでは無効(<code>false</code>)に設定されているが(バージョン4.1.1の場合)、次のように有効化できる。
+      </p>
+      <div><code>gradient+shadow.scss</code> (先頭部分)</div>
+      <pre class="p-2 border bg-light"><code>// カスタマイズ用プリセット変数を設定
 $enable-gradients: true;
 $enable-shadows: true;
 
 // Bootstrapをインポート
 @import &quot;bootstrap/scss/bootstrap&quot;;
-...</code></pre><p class="my-2">これらを有効化した場合の表示効果の違いは<a href="gradient+shadow.html">グラデーションとシャドウ</a>を参照(実際に違いを比較できる)。</p><h4 class="mt-3" id="modifying-map-variables">マップ変数の操作</h4><p class="my-2">Sass変数には様々な型の値を設定できる(言語マニュアルの<a href="https://sass-lang.com/documentation/file.SASS_REFERENCE.html#data_types" target="_blank">Data Types</a>を参照)。Bootstrapソースが用いている変数は大部分スカラー型(数、文字列、色、真偽値、null)だが、次の変数はキー/値のマップ型で定義されている。</p><ul><li><code>$grays</code> : グレースケールのプリセット値</li><li><code>$colors</code> : 基本色 (blue, indigo, purple, ...)</li><li><code>$theme-colors</code> : Bootstrapのテーマ色 (primary, secondary, success,  ...)</li><li><code>$spacers</code> : <a href="http://getbootstrap.com/docs/4.1/utilities/spacing/" target="_blank">空白ユーティリティ</a>のプリセット値</li><li><code>$sizes</code> : <a href="http://getbootstrap.com/docs/4.1/utilities/sizing/" target="_blank">サイズユーティリティ</a>のプリセット値</li><li><code>$grid-breakpoints</code> : <a href="http://getbootstrap.com/docs/4.1/layout/grid/" target="_blank">グリッド</a>のブレークポイント(ビューポート幅)プリセット値</li><li><code>$container-max-widths</code> : <a href="http://getbootstrap.com/docs/4.1/layout/grid/" target="_blank">グリッド</a>の各ブレークポイントに対し<a href="https://getbootstrap.com/docs/4.1/layout/overview/#containers" target="_blank">コンテナ</a> に設定される幅</li></ul><p class="my-2">これらの値も変更可能で、追加や値の変更は次のように容易に行うことができる。</p><div><code>variables.scss</code> (本ページのSassソース)</div><pre class="p-2 border bg-light"><code>// 例: $theme-colorsへの追加・変更
+...</code></pre>
+      <p class="my-2">これらを有効化した場合の表示効果の違いは<a href="gradient+shadow.html">グラデーションとシャドウ</a>を参照(実際に違いを比較できる)。</p>
+      <h4 class="mt-3" id="modifying-map-variables">マップ変数の操作</h4>
+      <p class="my-2">Sass変数には様々な型の値を設定できる(言語マニュアルの<a href="https://sass-lang.com/documentation/file.SASS_REFERENCE.html#data_types" target="_blank">Data Types</a>を参照)。Bootstrapソースが用いている変数は大部分スカラー型(数、文字列、色、真偽値、null)だが、次の変数はキー/値のマップ型で定義されている。
+      </p>
+      <ul>
+        <li><code>$grays</code> : グレースケールのプリセット値
+        </li>
+        <li><code>$colors</code> : 基本色 (blue, indigo, purple, ...)
+        </li>
+        <li><code>$theme-colors</code> : Bootstrapのテーマ色 (primary, secondary, success,  ...)
+        </li>
+        <li><code>$spacers</code> : <a href="http://getbootstrap.com/docs/4.1/utilities/spacing/" target="_blank">空白ユーティリティ</a>のプリセット値
+        </li>
+        <li><code>$sizes</code> : <a href="http://getbootstrap.com/docs/4.1/utilities/sizing/" target="_blank">サイズユーティリティ</a>のプリセット値
+        </li>
+        <li><code>$grid-breakpoints</code> : <a href="http://getbootstrap.com/docs/4.1/layout/grid/" target="_blank">グリッド</a>のブレークポイント(ビューポート幅)プリセット値
+        </li>
+        <li><code>$container-max-widths</code> : <a href="http://getbootstrap.com/docs/4.1/layout/grid/" target="_blank">グリッド</a>の各ブレークポイントに対し<a href="https://getbootstrap.com/docs/4.1/layout/overview/#containers" target="_blank">コンテナ</a> に設定される幅
+        </li>
+      </ul>
+      <p class="my-2">これらの値も変更可能で、追加や値の変更は次のように容易に行うことができる。</p>
+      <div><code>variables.scss</code> (本ページのSassソース)</div>
+      <pre class="p-2 border bg-light"><code>// 例: $theme-colorsへの追加・変更
 $theme-colors: (
   // &quot;success&quot; をgreenからtealに変更
   &quot;success&quot;: #20c997,
@@ -19,4 +80,34 @@ $theme-colors: (
 
 // Bootstrapをインポート
 @import &quot;bootstrap/scss/bootstrap&quot;;
-</code></pre><p class="my-2">次は実際に設定したもののサンプル(Bootstrapデフォルト状態と比較すること ⇒ 公式ドキュメントの<a href="http://getbootstrap.com/docs/4.1/components/alerts/#examples" target="_blank">Official document examples</a>を参照).</p><div class="alert alert-success">アラートサンプル(success) (色をgreenからtealに変更) - <code>div.alert.alert-success</code></div><div class="alert alert-custom">アラートサンプル(custom) (色はorangeに設定) - <code>div.alert.alert-custom</code></div><p class="my-2">逆に(使わない)キーを削除することも可能だがやや難しくなる(ただしこれが必要になることはあまりないので以下参考)。これにはまずSass組み込み関数の知識が必要。マップの操作は<a href="https://sass-lang.com/documentation/Sass/Script/Functions.html" target="_blank">組み込み関数</a>を用いる(言語マニュアルの<code>map-functions</code>または<code>map-remove($map, $keys...)</code>を検索すればその付近に説明がある)。</p><p class="my-2">またBootstrapのインポートは全体丸ごとではなくパーシャルごとに行う必要がある。コード例が公式ドキュメントの<a href="http://getbootstrap.com/docs/4.1/getting-started/theming/#remove-from-map" target="_blank">Remove from map</a>にあるので参照すること。</p><nav class="mt-4 mb-5" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="index.html">ホーム</a></li><li class="breadcrumb-item active" aria-current="page">Sass変数の操作</li></ol></nav></div></body></html>
+</code></pre>
+      <p class="my-2">次は実際に設定したもののサンプル(Bootstrapデフォルト状態と比較すること ⇒ 公式ドキュメントの<a href="http://getbootstrap.com/docs/4.1/components/alerts/#examples" target="_blank">Official document examples</a>を参照).
+      </p>
+      <div class="alert alert-success">アラートサンプル(success) (色をgreenからtealに変更) - <code>div.alert.alert-success</code></div>
+      <div class="alert alert-custom">アラートサンプル(custom) (色はorangeに設定) - <code>div.alert.alert-custom</code></div>
+      <p class="my-2">逆に(使わない)キーを削除することも可能だがやや難しくなる(ただしこれが必要になることはあまりないので以下参考)。これにはまずSass組み込み関数の知識が必要。マップの操作は<a href="https://sass-lang.com/documentation/Sass/Script/Functions.html" target="_blank">組み込み関数</a>を用いる(言語マニュアルの<code>map-functions</code>または<code>map-remove($map, $keys...)</code>を検索すればその付近に説明がある)。
+      </p>
+      <p class="mt-2 mb-4">またBootstrapのインポートは全体丸ごとではなくパーシャルごとに行う必要がある。コード例が公式ドキュメントの<a href="http://getbootstrap.com/docs/4.1/getting-started/theming/#remove-from-map" target="_blank">Remove from map</a>にあるので参照すること。
+      </p>
+      <div class="row my-2">
+        <div class="col"><a href="partials.html">Sassパーシャルのインポート</a> ⇐</div>
+        <div class="col text-center">
+        </div>
+        <div class="col text-right">⇒ <a href="mixins.html">Sassミックスインの利用</a></div>
+      </div>
+      <nav class="mt-2 mb-5" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">ホーム</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Sass変数の操作</li>
+        </ol>
+      </nav>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script>
+      // Add self links to headings
+      $('h2[id],h3[id],h4[id],h5[id],h6[id]').append(function() {
+        return '<a class="heading-link" href="#' + this.id + '">#</a>';
+      });
+    </script>
+  </body>
+</html>
