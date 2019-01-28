@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+rm -f index.html
+rm -rf en
+rm -rf ja
+rm -rf css
+rm -rf img
+cp -r .tmp/* .
